@@ -18,13 +18,31 @@ class MyComponent extends React.Component {
             age: 18
         })
     }
+
+    handleOnChangeInput = (e) => {
+        this.setState({
+            name: e.target.value
+        })
+    }
+
+    handleOnSubmit = (e) => {
+        e.preventDefault()
+        console.log(this.state)
+    }
     render() {
         return (
             <div>
                 My first component
                 My name is {this.state.name} and I'm from {this.state.address}
                 <button onMouseOver={this.handleOnMoverOver}>Click me!</button>
-                <button onClick={(event) => {this.handleClick(event)}}>Click me!</button>
+                <button onClick={(e) => {this.handleClick(e)}}>Click me!</button>
+                <form onSubmit={e => this.handleOnSubmit(e)}>
+                    <input
+                        onChange={(event) => this.handleOnChangeInput(event)}
+                        type="text"
+                    />
+                    <button>Submit</button>
+                </form>
             </div>
         )
     }
