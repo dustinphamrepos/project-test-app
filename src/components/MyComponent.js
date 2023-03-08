@@ -8,17 +8,20 @@ class MyComponent extends React.Component {
             {
                 id: 1,
                 name: 'Pham',
-                address: 'HCMC'
+                address: 'HCMC',
+                age: '16'
             },
             {
                 id: 2,
                 name: 'Trung',
-                address: 'HN'
+                address: 'HN',
+                age: '50'
             },
             {
                 id: 3,
                 name: 'Duc',
-                address: 'NY'
+                address: 'NY',
+                age: '69'
             }
         ]
     }
