@@ -35,7 +35,6 @@ const DisplayInfor = (props) => {
                     })}
                 </>
             }
-            {/* <img src={logo} /> */}
         </div>
     )
 }

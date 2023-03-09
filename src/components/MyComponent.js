@@ -1,62 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import DisplayInfor from "./DisplayInfor";
 import AddUserInfor from "./AddUserInfor";
-class MyComponent extends React.Component {
 
-    state = {
-        listUsers: [
-            {
-                id: 1,
-                name: 'Pham',
-                address: 'HCMC',
-                age: '16'
-            },
-            {
-                id: 2,
-                name: 'Trung',
-                address: 'HN',
-                age: '50'
-            },
-            {
-                id: 3,
-                name: 'Duc',
-                address: 'NY',
-                age: '69'
-            }
-        ]
-    }
+const MyComponent = (props) => {
 
-    handleAddNewUser = (newUser) => {
-        console.log(newUser)
-        this.setState({
-            listUsers: [
+    const [listUsers, setListUsers] = useState([
+        {
+            id: 1,
+            name: 'Pham',
+            address: 'HCMC',
+            age: '16'
+        },
+        {
+            id: 2,
+            name: 'Trung',
+            address: 'HN',
+            age: '50'
+        },
+        {
+            id: 3,
+            name: 'Duc',
+            address: 'NY',
+            age: '69'
+        }
+    ])
+
+    const handleAddNewUser = (newUser) => {
+        setListUsers([
                 newUser,
-                ...this.state.listUsers,
+                ...listUsers,
             ]
-        })
-    }
-
-    handleDeleteUser = (userId) => {
-        let listUsersClone = [...this.state.listUsers]
-        listUsersClone = listUsersClone.filter(item => item.id !== userId)
-        this.setState({
-            listUsers: listUsersClone
-        })
-    }
-    render() {
-        return (
-            <>
-                <AddUserInfor
-                    handleAddNewUser={this.handleAddNewUser}
-                />
-                <br></br>
-                <DisplayInfor
-                    listUsers={this.state.listUsers}
-                    handleDeleteUser={this.handleDeleteUser}
-                />
-            </>
         )
     }
+
+    const handleDeleteUser = (userId) => {
+        let listUsersClone = [...listUsers]
+        listUsersClone = listUsersClone.filter(item => item.id !== userId)
+        setListUsers(listUsersClone)
+    }
+
+    return (
+        <>
+            <AddUserInfor
+                handleAddNewUser={handleAddNewUser}
+            />
+            <br></br>
+            <DisplayInfor
+                listUsers={listUsers}
+                handleDeleteUser={handleDeleteUser}
+            />
+        </>
+    )
 }
+
 
 export default MyComponent

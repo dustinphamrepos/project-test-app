@@ -1,88 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 
-class AddUserInfor extends React.Component {
-    state = {
-        name: '',
-        age: '',
-        address: ''
+const AddUserInfor = (props) => {
+    const [userName, setUserName] = useState('')
+    const [userAge, setUserAge] = useState('')
+    const [userAddress, setUserAddress] = useState('')
+
+    const handleOnChangeName = (e) => {
+        setUserName(e.target.value)
     }
 
-    // handleOnMoverOver = event => {
-    //     console.log(event)
-    // }
-
-    // handleClick(event) {
-    //     console.log('>>> click me by button')
-    //     console.log('My name is: ', this.state.name)
-    //     console.log(event.target)
-    //     this.setState({
-    //         name: 'Trung Duc',
-    //         age: 18
-    //     })
-    // }
-
-    handleOnChangeName = (e) => {
-        this.setState({
-            name: e.target.value
-        })
+    const handleOnChangeAge = (e) => {
+        setUserAge(e.target.value)
     }
 
-    handleOnChangeAge = (e) => {
-        this.setState({
-            age: e.target.value
-        })
+    const handleOnChangeAddress = (e) => {
+        setUserAddress(e.target.value)
     }
 
-    handleOnChangeAddress = (e) => {
-        this.setState({
-            address: e.target.value
-        })
-    }
-
-    handleOnSubmit = (e) => {
+    const handleOnSubmit = (e) => {
         e.preventDefault()
-        this.props.handleAddNewUser({
-            id: Math.floor((Math.random()*100) + 1) + '-random',
-            name: this.state.name,
-            age: this.state.age,
-            address: this.state.address
+        props.handleAddNewUser({
+            id: Math.floor((Math.random() * 100) + 1) + '-random',
+            name: userName,
+            age: userAge,
+            address: userAddress
         })
     }
-    
-    render() {
-        return (
-            <div>
-                My name is {this.state.name} and I'm from {this.state.address}
-                <form onSubmit={e => this.handleOnSubmit(e)}>
-                    <label>Your name: </label>
-                    <br />
-                    <input
-                        value={this.state.name}
-                        onChange={(event) => this.handleOnChangeName(event)}
-                        type="text"
-                    />
-                    <br />
-                    <label>Your age: </label>
-                    <br />
-                    <input
-                        value={this.state.age}
-                        onChange={(event) => this.handleOnChangeAge(event)}
-                        type="text"
-                    />
-                    <br />
-                    <label>Your address: </label>
-                    <br />
-                    <input
-                        value={this.state.address}
-                        onChange={(event) => this.handleOnChangeAddress(event)}
-                        type="text"
-                    />
-                    <br />
-                    <button>Submit</button>
-                </form>
-            </div>
-        )
-    }
+    return (
+        <div>
+            My name is {userName} and I'm from {userAddress}
+            <form onSubmit={e => handleOnSubmit(e)}>
+                <label>Your name: </label>
+                <br />
+                <input
+                    value={userName}
+                    onChange={(event) => handleOnChangeName(event)}
+                    type="text"
+                />
+                <br />
+                <label>Your age: </label>
+                <br />
+                <input
+                    value={userAge}
+                    onChange={(event) => handleOnChangeAge(event)}
+                    type="text"
+                />
+                <br />
+                <label>Your address: </label>
+                <br />
+                <input
+                    value={userAddress}
+                    onChange={(event) => handleOnChangeAddress(event)}
+                    type="text"
+                />
+                <br />
+                <button>Submit</button>
+            </form>
+        </div>
+    )
 }
 
 export default AddUserInfor
