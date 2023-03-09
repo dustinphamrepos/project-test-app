@@ -2,16 +2,38 @@ import React from "react";
 import './DisplayInfor.scss'
 import logo from "../logo.svg"
 class DisplayInfor extends React.Component {
-
-    state = {
-        isShowListUsers: true
+    constructor(props) {
+        console.log('>> call constructor 1')
+        super(props)
+        this.state = {
+            isShowListUsers: true
+        }
     }
+
     handleShowHide() {
         this.setState({
             isShowListUsers: !this.state.isShowListUsers
         })
     }
+
+    componentDidMount() {
+        console.log('>> call me did mount')
+        setTimeout(() => {
+            document.title = 'Trung Duc'
+        }, 3000)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('>> call me did update', this.props, prevProps)
+        if (this.props.listUsers !== prevProps.listUsers) {
+            if (this.props.listUsers.length === 5) {
+                alert('aaa')
+            }
+        }
+    }
+
     render() {
+        console.log('>> call me render')
         const { listUsers } = this.props
         console.log(listUsers)
         return (
