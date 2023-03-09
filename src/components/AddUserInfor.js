@@ -55,23 +55,29 @@ class AddUserInfor extends React.Component {
                 My name is {this.state.name} and I'm from {this.state.address}
                 <form onSubmit={e => this.handleOnSubmit(e)}>
                     <label>Your name: </label>
+                    <br />
                     <input
                         value={this.state.name}
                         onChange={(event) => this.handleOnChangeName(event)}
                         type="text"
                     />
+                    <br />
                     <label>Your age: </label>
+                    <br />
                     <input
                         value={this.state.age}
                         onChange={(event) => this.handleOnChangeAge(event)}
                         type="text"
                     />
+                    <br />
                     <label>Your address: </label>
+                    <br />
                     <input
                         value={this.state.address}
                         onChange={(event) => this.handleOnChangeAddress(event)}
                         type="text"
                     />
+                    <br />
                     <button>Submit</button>
                 </form>
             </div>
