@@ -12,6 +12,7 @@ import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } fro
 import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md';
 import sidebarBg from '../../assets/bg2.jpg';
+import { Link } from 'react-router-dom';
 
 const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
     return (
@@ -44,9 +45,10 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                 <SidebarContent>
                     <Menu iconShape="circle">
                         <MenuItem
-                            icon={<FaTachometerAlt />}
+                            icon={<MdDashboard />}
                         >
                             Dashboard
+                            <Link to='/admins' />
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="circle">
@@ -54,7 +56,9 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                             icon={<FaGem />}
                             title='Features'
                         >
-                            <MenuItem>Quản lý Users</MenuItem>
+                            <MenuItem>Quản lý Users
+                                <Link to='/admins/manage-users' />
+                            </MenuItem>
                             <MenuItem>Quản lý bài Quiz</MenuItem>
                             <MenuItem>Quản lý câu hỏi</MenuItem>
                         </SubMenu>
@@ -74,7 +78,7 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                             rel="noopener noreferrer"
                         >
                             <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                            &#169; Hỏi Trung Đức
+                                Hỏi Trung Đức
                             </span>
                         </a>
                     </div>
