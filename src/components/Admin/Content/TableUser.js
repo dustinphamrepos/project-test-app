@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
-import { getAllUsers } from "../../../services/apiService";
-
 function TableUser(props) {
-    const [lisUsers, setListUsers] = useState([])
+    const { listUsers } = props
 
-    useEffect(() => {
-        fetchListUsers()
-    }, [])
-
-    const fetchListUsers = async () => {
-        let res = await getAllUsers()
-        if (res.EC === 0) {
-            setListUsers(res.DT)
-        }
-    }
     return (
         <>
             <table className="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
@@ -27,11 +14,11 @@ function TableUser(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {lisUsers && lisUsers.length > 0 &&
-                        lisUsers.map((user, index) => {
+                    {listUsers && listUsers.length > 0 &&
+                        listUsers.map((user, index) => {
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <td>{index + 1}</td>
+                                    <td>{user.id}</td>
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
@@ -44,7 +31,7 @@ function TableUser(props) {
                             )
                         })
                     }
-                    {lisUsers && lisUsers.length === 0 &&
+                    {listUsers && listUsers.length === 0 &&
                         <tr>
                             <td colSpan={'4'}>Not found data</td>
                         </tr>
