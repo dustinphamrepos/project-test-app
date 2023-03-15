@@ -1,19 +1,35 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import './Login.scss'
+import { postLogin } from '../../services/apiService';
 
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
-    const handleLogin = () => {
-        alert('scdvcewvc')
+    const handleLogin = async () => {
+        //validate
+
+        //submit api
+        let data = await postLogin(email, password)
+        if (data && data.EC === 0) {
+            toast.success(data.EM)
+            navigate('/')
+        }
+
+        if (data && +data.EC !== 0) {
+            toast.error(data.EM)
+        }
     }
 
     return (
         <div className="login-container">
             <div className='header'>
-                Do you have an account yet?
+                <span>Do you have an account yet?</span>
+                <button>Sign up</button>
             </div>
             <div className='title col-4 mx-auto'>
                 TrungDuc
@@ -48,6 +64,9 @@ const Login = (props) => {
                     >
                         Login to TrungDuc
                     </button>
+                </div>
+                <div className='back text-center'>
+                    <span onClick={() => navigate('/')}>&#60;&#60; Go to homepage</span>
                 </div>
             </div>
         </div>
