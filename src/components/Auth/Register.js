@@ -60,7 +60,7 @@ const Register = (props) => {
             </div>
             <div className='content-form col-4 mx-auto'>
                 <div className='form-group'>
-                    <label>Email</label>
+                    <label>Email (*)</label>
                     <input
                         value={email}
                         type="email"
@@ -78,7 +78,7 @@ const Register = (props) => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label>Password</label>
+                    <label>Password (*)</label>
                     <input
                         value={password}
                         type={showPassword ? 'text' : 'password'}
