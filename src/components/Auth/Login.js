@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
+import { ImSpinner6 } from 'react-icons/im'
 import './Login.scss'
 import { postLogin } from '../../services/apiService';
 import { doLogin } from '../../redux/action/userAction';
@@ -10,6 +11,7 @@ import { doLogin } from '../../redux/action/userAction';
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -34,17 +36,19 @@ const Login = (props) => {
             toast.error('Invalid password')
             return;
         }
-
+        setIsLoading(true)
         //submit api
         let data = await postLogin(email, password)
         if (data && data.EC === 0) {
             dispatch(doLogin())
             toast.success(data.EM)
+            setIsLoading(false)
             navigate('/')
         }
 
         if (data && +data.EC !== 0) {
             toast.error(data.EM)
+            setIsLoading(false)
         }
     }
 
@@ -84,8 +88,10 @@ const Login = (props) => {
                     <button
                         className='btn-submit'
                         onClick={() => handleLogin()}
+                        disabled={isLoading}
                     >
-                        Login to TrungDuc
+                        {isLoading === true && <ImSpinner6 className="loader-icon" />}
+                        <span>Login to TrungDuc</span>
                     </button>
                 </div>
                 <div className='back text-center'>
