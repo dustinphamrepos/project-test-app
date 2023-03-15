@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import './Login.scss'
-import { postLogin } from '../../services/apiService';
+import './Register.scss'
+import { postRegister } from '../../services/apiService';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 
-const Login = (props) => {
+const Register = (props) => {
     const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
 
     const validateEmail = (email) => {
@@ -18,7 +21,7 @@ const Login = (props) => {
             );
     };
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         //validate
         const isValidEmail = validateEmail(email)
         if (!isValidEmail) {
@@ -32,10 +35,10 @@ const Login = (props) => {
         }
 
         //submit api
-        let data = await postLogin(email, password)
+        let data = await postRegister(email, username, password)
         if (data && data.EC === 0) {
             toast.success(data.EM)
-            navigate('/')
+            navigate('/login')
         }
 
         if (data && +data.EC !== 0) {
@@ -44,10 +47,10 @@ const Login = (props) => {
     }
 
     return (
-        <div className="login-container">
+        <div className="register-container">
             <div className='header'>
-                <span>Do you have an account yet?</span>
-                <button onClick={() => navigate('/register')}>Sign up</button>
+                <span>Already have an account?</span>
+                <button onClick={() => navigate('/login')}>Log in</button>
             </div>
             <div className='title col-4 mx-auto'>
                 TrungDuc
@@ -66,21 +69,40 @@ const Login = (props) => {
                     />
                 </div>
                 <div className='form-group'>
+                    <label>Username</label>
+                    <input
+                        value={username}
+                        type="text"
+                        className="form-control"
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                </div>
+                <div className='form-group'>
                     <label>Password</label>
                     <input
                         value={password}
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         className="form-control"
                         onChange={e => setPassword(e.target.value)}
                     />
+                    {showPassword
+                        ?
+                        <span onClick={() => setShowPassword(!showPassword)}>
+                            <AiFillEyeInvisible />
+                        </span>
+                        :
+                        <span onClick={() => setShowPassword(!showPassword)}>
+                            <AiFillEye />
+                        </span>
+
+                    }
                 </div>
-                <span className='forgot-password'>Forgot password?</span>
                 <div>
                     <button
                         className='btn-submit'
-                        onClick={() => handleLogin()}
+                        onClick={() => handleRegister()}
                     >
-                        Login to TrungDuc
+                        Create my free account
                     </button>
                 </div>
                 <div className='back text-center'>
@@ -91,4 +113,4 @@ const Login = (props) => {
     );
 }
 
-export default Login;
+export default Register;

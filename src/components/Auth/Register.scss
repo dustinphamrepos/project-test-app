@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
     .header {
         height: 45px;
         text-align: right;
@@ -50,6 +50,15 @@
 
         .back {
             cursor: pointer;
+        }
+
+        .form-group {
+            position: relative;
+            span {
+                position: absolute;
+                top: 40px;
+                right: 16px;
+            }
         }
        
     }

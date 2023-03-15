@@ -8,8 +8,12 @@ const Header = () => {
 
     const navigate = useNavigate()
 
-    const handleLogin =()=> {
+    const handleLogin = () => {
         navigate('login')
+    }
+
+    const handleSignUp = () => {
+        navigate('register')
     }
     return (
         <Navbar bg="light" expand="lg">
@@ -25,7 +29,7 @@ const Header = () => {
                     </Nav>
                     <Nav>
                         <button className='btn-login' onClick={() => handleLogin()}>Log in</button>
-                        <button className='btn-signup'>Sign up</button>
+                        <button className='btn-signup' onClick={() => handleSignUp()}>Sign up</button>
                         <NavDropdown title="Setting" id="basic-nav-dropdown">
                         </NavDropdown>
                     </Nav>
