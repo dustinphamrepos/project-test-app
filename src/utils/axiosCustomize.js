@@ -1,5 +1,6 @@
 import axios from "axios";
 import NProgress from 'nprogress'
+import { store } from "../redux/store";
 
 NProgress.configure({
     showSpinner: false,
@@ -12,7 +13,17 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+    console.log(store.getState());
+    const access_token = store?.getState()?.user?.account?.access_token
+    // if (access_token === undefined) {
+    //     config.headers["Authorization"] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlkIjozLCJpYXQiOjE2NzkwOTgyODIsImV4cCI6MTY3OTE4NDY4Mn0.BImHJnfb2FVmH8BJ00nwxaD8AC6JxPzD-QjmDeMkrdA`;
+    // } else {
+    //     config.headers["Authorization"] = `Bearer ${access_token}`
+    // }
+    config.headers["Authorization"] = `Bearer ${access_token}`
+    // config.headers["Authorization"] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlkIjozLCJpYXQiOjE2NzkwOTgyODIsImV4cCI6MTY3OTE4NDY4Mn0.BImHJnfb2FVmH8BJ00nwxaD8AC6JxPzD-QjmDeMkrdA`;
     NProgress.start();
+
     // Do something before request is sent
     return config;
 }, function (error) {
