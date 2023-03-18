@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import _ from 'lodash'
 import { getDataQuiz } from "../../services/apiService";
 import './DetailQuiz.scss'
+import Question from "./Question";
 
 const DetailQuiz = () => {
     const params = useParams()
     const location = useLocation()
+    const [dataQuiz, setDataQuiz] = useState([])
+    const [indexOfCurrentQuestion, setIndexOfCurrentQuestion] = useState(0)
     // console.log(location)
 
     // console.log('>>>>>>', params)
@@ -41,6 +44,19 @@ const DetailQuiz = () => {
                 })
                 .value()
             // console.log(data)
+            setDataQuiz(data)
+        }
+    }
+    // console.log('>>>: ', dataQuiz)
+    const handlePrev = () => {
+        if (indexOfCurrentQuestion > 0) {
+            setIndexOfCurrentQuestion(indexOfCurrentQuestion - 1)
+        }
+    }
+
+    const handleNext = () => {
+        if (dataQuiz && dataQuiz.length - 1 > indexOfCurrentQuestion) {
+            setIndexOfCurrentQuestion(indexOfCurrentQuestion + 1)
         }
     }
 
@@ -51,22 +67,30 @@ const DetailQuiz = () => {
                     Quiz {quizId}: {location?.state?.quizTitle}
                 </div>
                 <hr />
-                <div className="q-body">
-                    <img />
-                </div>
                 <div className="q-content">
-                    <div className="question">
-                            Question 1: How are u doing?
-                    </div>
-                    <div className="answer">
-                        <div className="a-child">A. iwuvjwkjvcjksw</div>
-                        <div className="b-child">A. iwuvjwkjvcjksw</div>
-                        <div className="c-child">A. iwuvjwkjvcjksw</div>
-                    </div>
+                    <Question
+                        index={indexOfCurrentQuestion}
+                        data={
+                            dataQuiz && dataQuiz.length > 0
+                                ?
+                                dataQuiz[indexOfCurrentQuestion]
+                                :
+                                []
+                        } />
                 </div>
                 <div className="footer">
-                    <button className="btn btn-secondary">Prev</button>
-                    <button className="btn btn-primary">Next</button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => handlePrev()}
+                    >
+                        Prev
+                    </button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => handleNext()}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
             <div className="right-content">
