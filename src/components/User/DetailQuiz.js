@@ -10,6 +10,7 @@ const DetailQuiz = () => {
     const location = useLocation()
     const [dataQuiz, setDataQuiz] = useState([])
     const [indexOfCurrentQuestion, setIndexOfCurrentQuestion] = useState(0)
+
     // console.log(location)
 
     // console.log('>>>>>>', params)
@@ -36,6 +37,7 @@ const DetailQuiz = () => {
                             questionDescription = item.description
                             image = item.image
                         }
+                        item.answers.isSelected = false
                         answers.push(item.answers)
                     })
                     // console.log('value: ', value)
@@ -47,7 +49,7 @@ const DetailQuiz = () => {
             setDataQuiz(data)
         }
     }
-    // console.log('>>>: ', dataQuiz)
+    console.log('>>>dataQuiz: ', dataQuiz)
     const handlePrev = () => {
         if (indexOfCurrentQuestion > 0) {
             setIndexOfCurrentQuestion(indexOfCurrentQuestion - 1)
@@ -57,6 +59,27 @@ const DetailQuiz = () => {
     const handleNext = () => {
         if (dataQuiz && dataQuiz.length - 1 > indexOfCurrentQuestion) {
             setIndexOfCurrentQuestion(indexOfCurrentQuestion + 1)
+        }
+    }
+
+    const handleCheckbox = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz)
+        console.log(dataQuizClone)
+        let question = dataQuizClone.find(item => +item.questionId === +questionId)
+        if (question && question.answers) {
+            let b = question.answers.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected
+                }
+                return item
+            })
+            question.answers = b
+            console.log(b)
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
+        if (index > -1) {
+            dataQuizClone[index] = question
+            setDataQuiz(dataQuizClone)
         }
     }
 
@@ -70,6 +93,7 @@ const DetailQuiz = () => {
                 <div className="q-content">
                     <Question
                         index={indexOfCurrentQuestion}
+                        handleCheckbox={handleCheckbox}
                         data={
                             dataQuiz && dataQuiz.length > 0
                                 ?
@@ -90,6 +114,12 @@ const DetailQuiz = () => {
                         onClick={() => handleNext()}
                     >
                         Next
+                    </button>
+                    <button
+                        className="btn btn-warning"
+                        onClick={() => handleNext()}
+                    >
+                        Finish
                     </button>
                 </div>
             </div>
