@@ -46,7 +46,7 @@ const ManageQuiz = (props) => {
         <div className="quiz-container">
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header className="title">Manage Quiz</Accordion.Header>
+                    <Accordion.Header>Manage Quiz</Accordion.Header>
                     <Accordion.Body>
                         <div className="add-new">
                             <fieldset className="border rounded-3 p-3">
@@ -101,7 +101,6 @@ const ManageQuiz = (props) => {
                 </Accordion.Item>
             </Accordion>
             <hr />
-
             <div className="list-detail">
                 <TableQuiz />
             </div>
