@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import _ from 'lodash'
-import { getDataQuiz, postSubmitQuiz } from "../../services/apiService";
+import { getDataQuiz, postSubmitAnswersQuiz } from "../../services/apiService";
 import './DetailQuiz.scss'
 import Question from "./Question";
 import ModalResult from "./ModalResult";
@@ -125,7 +125,7 @@ const DetailQuiz = () => {
             // console.log('...', payload)
 
             //submit api
-            let res = await postSubmitQuiz(payload)
+            let res = await postSubmitAnswersQuiz(payload)
             console.log('res>>>', res);
             if (res && res.EC === 0) {
                 setDataModalResult({
