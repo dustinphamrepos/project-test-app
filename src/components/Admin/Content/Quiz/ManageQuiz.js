@@ -3,8 +3,9 @@ import Select from 'react-select'
 import { toast } from 'react-toastify'
 import { Accordion } from 'react-bootstrap'
 import './ManageQuiz.scss'
-import { postCreateNewQuiz } from '../../../../services/apiService'
+import { postCreateNewQuiz, getAllQuizForAdmin } from '../../../../services/apiService'
 import TableQuiz from './TableQuiz'
+import ModalEditQuiz from './ModalEditQuiz'
 
 
 const options = [
@@ -18,6 +19,17 @@ const ManageQuiz = (props) => {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [image, setImage] = useState(null)
+    const [showModalEditQuizzes, setShowModalEditQuizzes] = useState(false)
+    const [dataEdit, setDataEdit] = useState({})
+    const [listQuizzes, setListQuizzes] = useState([])
+
+    const fetchListQuizzes = async () => {
+        let res = await getAllQuizForAdmin()
+        // console.log('>>>', res)
+        if (res && res.EC === 0) {
+            setListQuizzes(res.DT)
+        }
+    }
 
     const handleChangeFile = (e) => {
         if (e.target && e.target.files && e.target.files[0]) {
@@ -38,10 +50,22 @@ const ManageQuiz = (props) => {
             setDescription('')
             setType('')
             setImage(null)
+            fetchListQuizzes()
         } else {
             toast.error(res.EM)
         }
     }
+
+    const handleClickEditQuiz = (quiz) => {
+        setShowModalEditQuizzes(true)
+        // console.log(quiz)
+        setDataEdit(quiz)
+    }
+
+    const resetDataEdit = () => {
+        setDataEdit({})
+    }
+
     return (
         <div className="quiz-container">
             <Accordion defaultActiveKey="0">
@@ -102,8 +126,21 @@ const ManageQuiz = (props) => {
             </Accordion>
             <hr />
             <div className="list-detail">
-                <TableQuiz />
+                <TableQuiz
+                    listQuizzes={listQuizzes}
+                    setListQuizzes={setListQuizzes}
+                    fetchListQuizzes={fetchListQuizzes}
+                    handleClickEditQuiz={handleClickEditQuiz}
+                />
             </div>
+            <ModalEditQuiz
+                show={showModalEditQuizzes}
+                setShow={setShowModalEditQuizzes}
+                dataEdit={dataEdit}
+                fetchListQuizzes={fetchListQuizzes}
+                resetDataEdit={resetDataEdit}
+                options={options}
+            />
         </div>
     )
 }

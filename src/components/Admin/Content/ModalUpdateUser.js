@@ -9,6 +9,14 @@ import { putUpdateUser } from '../../../services/apiService';
 
 const ModalUpdateUser = (props) => {
     const { show, setShow, dataUpdate } = props
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [userName, setUserName] = useState("")
+    const [role, setRole] = useState("USER")
+    const [image, setImage] = useState("")
+    const [previewImage, setPreviewImage] = useState("")
+
     const handleClose = () => {
         setShow(false)
         setEmail('')
@@ -20,13 +28,7 @@ const ModalUpdateUser = (props) => {
         props.resetUpdateData()
     };
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [userName, setUserName] = useState("")
-    const [role, setRole] = useState("USER")
-    const [image, setImage] = useState("")
-    const [previewImage, setPreviewImage] = useState("")
-
+    
     useEffect(() => {
         if (!_.isEmpty(dataUpdate)) {
             setEmail(dataUpdate.email)

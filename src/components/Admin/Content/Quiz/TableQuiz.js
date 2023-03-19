@@ -1,19 +1,10 @@
-import { useState, useEffect } from "react";
-import { getAllQuizForAdmin } from "../../../../services/apiService";
+import { useEffect } from "react";
 
-const TableQuiz = () => {
-    const [listQuiz, setListQuiz] = useState([])
+const TableQuiz = (props) => {
+    const { listQuizzes, fetchListQuizzes } = props
     useEffect(() => {
-        fetchQuiz()
+        fetchListQuizzes()
     }, [])
-
-    const fetchQuiz = async () => {
-        let res = await getAllQuizForAdmin()
-        console.log('>>>', res)
-        if (res && res.EC === 0) {
-            setListQuiz(res.DT)
-        }
-    }
 
     return (
         <>
@@ -29,15 +20,21 @@ const TableQuiz = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listQuiz && listQuiz.map((item, index) => {
+                    {listQuizzes && listQuizzes.map((quiz, index) => {
+                        // console.log(quiz)
                         return (
                             <tr key={`table-quiz-${index}`}>
-                                <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.description}</td>
-                                <td>{item.difficulty}</td>
+                                <td>{quiz.id}</td>
+                                <td>{quiz.name}</td>
+                                <td>{quiz.description}</td>
+                                <td>{quiz.difficulty}</td>
                                 <td style={{ display: "flex", gap: "15px" }}>
-                                    <button className="btn btn-warning">Edit</button>
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={() => props.handleClickEditQuiz(quiz)}
+                                    >
+                                        Edit
+                                    </button>
                                     <button className="btn btn-danger">Delete</button>
                                 </td>
                             </tr>

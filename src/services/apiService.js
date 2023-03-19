@@ -11,7 +11,6 @@ const postCreateUser = (email, password, userName, role, image) => {
     return axios.post('api/v1/participant', data)
 }
 
-
 const putUpdateUser = (id, userName, role, image) => {
     //call apis
     const data = new FormData();
@@ -67,9 +66,20 @@ const getAllQuizForAdmin = () => {
     return axios.get(`/api/v1/quiz/all`)
 }
 
+const putEditQuiz = (name, description, difficulty, id) => {
+    //call apis
+    const data = new FormData();
+    data.append('name', name);
+    data.append('description', description);
+    data.append('difficulty', difficulty);
+    data.append('id', id);
+    return axios.put('api/v1/quiz', data)
+}
+
 export {
     postCreateUser, getAllUsers, putUpdateUser,
     deleteUser, getUserWithPaginate, postLogin,
     postRegister, getQuizByUser, getDataQuiz,
-    postSubmitAnswersQuiz, postCreateNewQuiz, getAllQuizForAdmin
+    postSubmitAnswersQuiz, postCreateNewQuiz, getAllQuizForAdmin,
+    putEditQuiz
 }
