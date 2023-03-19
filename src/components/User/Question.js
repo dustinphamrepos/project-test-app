@@ -7,7 +7,7 @@ const Question = (props) => {
     }
     const handleHandleCheckbox = (e, aId, qId) => {
         // console.log('>>>', e.target.checked)
-        console.log('data >>> ', data, aId, qId)
+        // console.log('data >>> ', data, aId, qId)
         handleCheckbox(aId, qId)
     }
 
