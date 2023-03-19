@@ -12,9 +12,10 @@ import { FaGem } from 'react-icons/fa';
 import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md';
 import sidebarBg from '../../assets/bg2.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
+    const navigate = useNavigate()
     return (
         <div>
             <ProSidebar
@@ -38,7 +39,7 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                         }}
                     >
                         <DiReact size={'3rem'} color={'00bfff'} />
-                        <span>Hoi Trung Duc</span>
+                        <span onClick={() => navigate('/')}>Hoi Trung Duc</span>
                     </div>
                 </SidebarHeader>
 
@@ -59,7 +60,9 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                             <MenuItem>Quản lý Users
                                 <Link to='/admins/manage-users' />
                             </MenuItem>
-                            <MenuItem>Quản lý bài Quiz</MenuItem>
+                            <MenuItem>Quản lý bài Quiz
+                                <Link to='/admins/manage-quizzes' />
+                            </MenuItem>
                             <MenuItem>Quản lý câu hỏi</MenuItem>
                         </SubMenu>
                     </Menu>
