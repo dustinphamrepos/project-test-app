@@ -8,7 +8,7 @@ const ModalDeleteUser = (props) => {
     const { show, setShow, dataDeleteQuiz, fetchListQuizzes } = props;
 
     const handleClose = () => setShow(false);
-    console.log(dataDeleteQuiz);
+    // console.log(dataDeleteQuiz);
     const handleSubmitDeleteQuiz = async () => {
         let data = await deleteQuiz(+dataDeleteQuiz.id)
         console.log(data)

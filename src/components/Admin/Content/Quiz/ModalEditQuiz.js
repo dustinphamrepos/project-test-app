@@ -1,4 +1,5 @@
 import Select from 'react-select'
+import { FcPlus } from 'react-icons/fc'
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,6 +14,8 @@ const ModalEditQuiz = (props) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [type, setType] = useState("")
+    const [image, setImage] = useState("")
+    const [previewImage, setPreviewImage] = useState("")
     const [idQuiz, setIdQuiz] = useState('')
 
     const handleClose = () => {
@@ -20,6 +23,7 @@ const ModalEditQuiz = (props) => {
         setName('')
         setDescription('')
         setType('')
+        setImage('')
         setIdQuiz('')
         resetDataEditQuiz({})
     };
@@ -29,6 +33,10 @@ const ModalEditQuiz = (props) => {
             setName(dataEditQuiz.name)
             setDescription(dataEditQuiz.description)
             setIdQuiz(dataEditQuiz.id)
+            setImage(dataEditQuiz.image)
+            if (dataEditQuiz.image) {
+                setPreviewImage(`data:image/png;base64,${dataEditQuiz.image}`)
+            }
             let option = options.find(option => option.value == dataEditQuiz.difficulty)
             setType(option)
         }
@@ -36,7 +44,7 @@ const ModalEditQuiz = (props) => {
     // console.log(dataEditQuiz)
     const handleSubmitEditQuiz = async () => {
         //validate
-        let data = await putEditQuiz(name, description, type?.value, dataEditQuiz.id)
+        let data = await putEditQuiz(name, description, type?.value, dataEditQuiz.id, image)
         // console.log('>>>check: ', data);
         if (data && data.EC === 0) {
             toast.success(data.EM)
@@ -48,6 +56,17 @@ const ModalEditQuiz = (props) => {
             toast.error(data.EM)
         }
     }
+
+    
+    const handleUploadImage = (e) => {
+        if (e.target && e.target.files && e.target.files[0]) {
+            setPreviewImage(URL.createObjectURL(e.target.files[0]))
+            setImage(e.target.files[0])
+        } else {
+            // setPreviewImage(null)
+        }
+    }
+
 
     return (
         <>
@@ -88,6 +107,27 @@ const ModalEditQuiz = (props) => {
                             value={description}
                             onChange={e => setDescription(e.target.value)}
                         />
+                    </div>
+                    <div className='col-md-12'>
+                        <label className="form-label label-upload" htmlFor='labelUpload'>
+                            <FcPlus />
+                            Upload file Image
+                        </label>
+                        <input
+                            type='file'
+                            hidden
+                            id="labelUpload"
+                            onChange={e => handleUploadImage(e)}
+                        />
+                    </div>
+                    <div className='col-md-12 img-preview'>
+                        {previewImage
+                            ?
+                            <img src={previewImage} />
+                            :
+                            <span>Preview image</span>
+                        }
+
                     </div>
                 </form></Modal.Body>
                 <Modal.Footer>
