@@ -17,16 +17,19 @@
         .group-upload {
             padding-top: 21px;
             .label-up {
-                height: 30px;
-                border: 1px solid red;
-                border-radius: 5px;
-                padding: 0px 10px;
+                cursor: pointer;
                 margin-right: 5px;
-                cursor: pointer;           
+                color: #9068ff;
+                font-size: 25px;
+                transition: 0.5s;
+                &:hover {
+                    color: #4400ff;
+                    transform: scale(1.1);
+                }       
             }
         }
 
-        .btn-change-count-questions {
+        .btn-change-amount-questions {
             padding-top: 21px;
 
             span {
@@ -83,7 +86,7 @@
             }
         }
 
-        .btn-change-count-answers {
+        .btn-change-amount-answers {
 
             span {
                 cursor: pointer;
