@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { FcPlus } from 'react-icons/fc'
 import ModalCreateUser from './ModalCreateUser'
 import './ManageUser.scss'
-import { getAllUsers, getUserWithPaginate } from "../../../services/apiService";
-// import TableUser from './TableUser'
+import { getAllUsers, getUserWithPaginate } from "../../../../services/apiService";
 import ModalUpdateUser from './ModalUpdateUser';
 import ModalViewUser from './ModalViewUser';
 import ModalDeleteUser from './ModalDeleteUser';
@@ -18,9 +17,9 @@ const ManageUser = (props) => {
     const [showModalUpdateUser, setShowModalUpdateUser] = useState(false)
     const [showModalViewUser, setShowModalViewUser] = useState(false)
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false)
-    const [dataUpdate, setDataUpdate] = useState({})
-    const [dataView, setDataView] = useState({})
-    const [dataDelete, setDataDelete] = useState({})
+    const [dataUpdateUser, setDataUpdateUser] = useState({})
+    const [dataViewUser, setDataViewUser] = useState({})
+    const [dataDeleteUser, setDataDeleteUser] = useState({})
     const [listUsers, setListUsers] = useState([])
 
     // useEffect(() => {
@@ -48,25 +47,25 @@ const ManageUser = (props) => {
 
     const handleClickBtnUpdate = (user) => {
         setShowModalUpdateUser(true)
-        setDataUpdate(user)
+        setDataUpdateUser(user)
     }
 
     const resetUpdateData = () => {
-        setDataUpdate({})
+        setDataUpdateUser({})
     }
 
     const handleViewUser = (user) => {
-        setDataView(user)
+        setDataViewUser(user)
         setShowModalViewUser(true)
     }
 
     const resetViewData = () => {
-        setDataView({})
+        setDataViewUser({})
     }
 
     const handleClickBtnDelete = (user) => {
         setShowModalDeleteUser(true)
-        setDataDelete(user)
+        setDataDeleteUser(user)
     }
 
     return (
@@ -114,7 +113,7 @@ const ManageUser = (props) => {
                     show={showModalUpdateUser}
                     setShow={setShowModalUpdateUser}
                     fetchListUsers={fetchListUsers}
-                    dataUpdate={dataUpdate}
+                    dataUpdateUser={dataUpdateUser}
                     resetUpdateData={resetUpdateData}
                     fetchListUsersWithPaginate={fetchListUsersWithPaginate}
                     currentPage={currentPage}
@@ -123,7 +122,7 @@ const ManageUser = (props) => {
                 <ModalViewUser
                     show={showModalViewUser}
                     setShow={setShowModalViewUser}
-                    dataView={dataView}
+                    dataViewUser={dataViewUser}
                     resetViewData={resetViewData}
                     fetchListUsersWithPaginate={fetchListUsersWithPaginate}
                     currentPage={currentPage}
@@ -132,7 +131,7 @@ const ManageUser = (props) => {
                 <ModalDeleteUser
                     show={showModalDeleteUser}
                     setShow={setShowModalDeleteUser}
-                    dataDelete={dataDelete}
+                    dataDeleteUser={dataDeleteUser}
                     fetchListUsers={fetchListUsers}
                     fetchListUsersWithPaginate={fetchListUsersWithPaginate}
                     currentPage={currentPage}

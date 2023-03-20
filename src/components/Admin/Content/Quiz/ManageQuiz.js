@@ -6,6 +6,7 @@ import './ManageQuiz.scss'
 import { postCreateNewQuiz, getAllQuizForAdmin } from '../../../../services/apiService'
 import TableQuiz from './TableQuiz'
 import ModalEditQuiz from './ModalEditQuiz'
+import ModalDeleteQuiz from './ModalDeleteQuiz'
 
 
 const options = [
@@ -19,9 +20,11 @@ const ManageQuiz = (props) => {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [image, setImage] = useState(null)
-    const [showModalEditQuizzes, setShowModalEditQuizzes] = useState(false)
-    const [dataEdit, setDataEdit] = useState({})
+    const [showModalEditQuiz, setShowModalEditQuiz] = useState(false)
+    const [dataEditQuiz, setDataEditQuiz] = useState({})
     const [listQuizzes, setListQuizzes] = useState([])
+    const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false)
+    const [dataDeleteQuiz, setDataDeleteQuiz] = useState({})
 
     const fetchListQuizzes = async () => {
         let res = await getAllQuizForAdmin()
@@ -57,18 +60,23 @@ const ManageQuiz = (props) => {
     }
 
     const handleClickEditQuiz = (quiz) => {
-        setShowModalEditQuizzes(true)
+        setShowModalEditQuiz(true)
         // console.log(quiz)
-        setDataEdit(quiz)
+        setDataEditQuiz(quiz)
     }
 
-    const resetDataEdit = () => {
-        setDataEdit({})
+    const resetDataEditQuiz = () => {
+        setDataEditQuiz({})
+    }
+
+    const handleClickDeleteQuiz = (quiz) => {
+        setShowModalDeleteQuiz(true)
+        setDataDeleteQuiz(quiz)
     }
 
     return (
         <div className="quiz-container">
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0" flush>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Manage Quiz</Accordion.Header>
                     <Accordion.Body>
@@ -131,15 +139,22 @@ const ManageQuiz = (props) => {
                     setListQuizzes={setListQuizzes}
                     fetchListQuizzes={fetchListQuizzes}
                     handleClickEditQuiz={handleClickEditQuiz}
+                    handleClickDeleteQuiz={handleClickDeleteQuiz}
                 />
             </div>
             <ModalEditQuiz
-                show={showModalEditQuizzes}
-                setShow={setShowModalEditQuizzes}
-                dataEdit={dataEdit}
+                show={showModalEditQuiz}
+                setShow={setShowModalEditQuiz}
+                dataEditQuiz={dataEditQuiz}
                 fetchListQuizzes={fetchListQuizzes}
-                resetDataEdit={resetDataEdit}
+                resetDataEditQuiz={resetDataEditQuiz}
                 options={options}
+            />
+            <ModalDeleteQuiz
+                show={showModalDeleteQuiz}
+                setShow={setShowModalDeleteQuiz}
+                dataDeleteQuiz={dataDeleteQuiz}
+                fetchListQuizzes={fetchListQuizzes}
             />
         </div>
     )

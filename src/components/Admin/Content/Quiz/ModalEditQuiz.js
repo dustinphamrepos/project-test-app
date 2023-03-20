@@ -8,7 +8,7 @@ import { putEditQuiz } from '../../../../services/apiService';
 
 
 const ModalEditQuiz = (props) => {
-    const { show, setShow, dataEdit, resetDataEdit, fetchListQuizzes, options } = props
+    const { show, setShow, dataEditQuiz, resetDataEditQuiz, fetchListQuizzes, options } = props
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
@@ -21,22 +21,22 @@ const ModalEditQuiz = (props) => {
         setDescription('')
         setType('')
         setIdQuiz('')
-        resetDataEdit({})
+        resetDataEditQuiz({})
     };
 
     useEffect(() => {
-        if (!_.isEmpty(dataEdit)) {
-            setName(dataEdit.name)
-            setDescription(dataEdit.description)
-            setIdQuiz(dataEdit.id)
-            let option = options.find(option => option.value == dataEdit.difficulty)
+        if (!_.isEmpty(dataEditQuiz)) {
+            setName(dataEditQuiz.name)
+            setDescription(dataEditQuiz.description)
+            setIdQuiz(dataEditQuiz.id)
+            let option = options.find(option => option.value == dataEditQuiz.difficulty)
             setType(option)
         }
-    }, [dataEdit])
-    console.log(dataEdit)
+    }, [dataEditQuiz])
+    // console.log(dataEditQuiz)
     const handleSubmitEditQuiz = async () => {
         //validate
-        let data = await putEditQuiz(name, description, type?.value, dataEdit.id)
+        let data = await putEditQuiz(name, description, type?.value, dataEditQuiz.id)
         // console.log('>>>check: ', data);
         if (data && data.EC === 0) {
             toast.success(data.EM)
