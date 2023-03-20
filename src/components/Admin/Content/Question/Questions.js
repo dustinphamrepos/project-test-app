@@ -5,6 +5,7 @@ import { FaMinusSquare } from "react-icons/fa";
 import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash'
+import Lightbox from "react-awesome-lightbox";
 import './Questions.scss'
 
 const options =
@@ -34,6 +35,12 @@ const Questions = (props) => {
             },
         ]
     )
+
+    const [isShowPreviewImage, setIsShowPreviewImage] = useState(false)
+    const [dataImagePreview, setDataImagePreview] = useState({
+        title: '',
+        url: ''
+    })
 
     const handleChangeAmountQuestions = (type, id) => {
         if (type === 'ADD') {
@@ -90,7 +97,7 @@ const Questions = (props) => {
         }
     }
 
-    const handleOnChangeFileQuestion = (questionId, e) => {
+    const handleOnChangeImageFileQuestion = (questionId, e) => {
         let questionsClone = _.cloneDeep(questions)
         let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
         if (index > -1 && e.target && e.target.files && e.target.files[0]) {
@@ -122,6 +129,21 @@ const Questions = (props) => {
 
     const handleSubmitQuestionsForQuiz = () => {
         console.log(questions);
+    }
+
+    const handlePreviewImage = (questionId) => {
+        let questionsClone = _.cloneDeep(questions)
+        let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
+        if (index > -1) {
+            setIsShowPreviewImage(true)
+            setDataImagePreview(
+                {
+                    title: questionsClone[index].imageName,
+                    url: URL.createObjectURL(questionsClone[index].imageFile)
+                }
+            )
+        }
+
     }
     return (
         <div className="questions-container">
@@ -163,9 +185,21 @@ const Questions = (props) => {
                                             id={`${question.id}`}
                                             type="file"
                                             hidden
-                                            onChange={(e) => handleOnChangeFileQuestion(question.id, e)}
+                                            onChange={(e) => handleOnChangeImageFileQuestion(question.id, e)}
                                         />
-                                        <span>{question.imageName ? question.imageName : '0 file is uploaded'}</span>
+                                        <span>
+                                            {question.imageName
+                                                ?
+                                                <span
+                                                    style={{ cursor: "pointer" }}
+                                                    onClick={() => handlePreviewImage(question.id)}
+                                                >
+                                                    {question.imageName}
+                                                </span>
+                                                :
+                                                '0 file is uploaded'
+                                            }
+                                        </span>
                                     </div>
                                     <div className="btn-change-amount-questions">
                                         <span onClick={() => handleChangeAmountQuestions('ADD', '')}>
@@ -217,10 +251,12 @@ const Questions = (props) => {
                                             </div>)
                                     })
                                 }
+
                             </div>
                         )
                     })
                 }
+
                 {
                     questions && questions.length > 0 &&
                     <div>
@@ -231,6 +267,16 @@ const Questions = (props) => {
                             Save questions
                         </button>
                     </div>
+                }
+
+
+                {isShowPreviewImage === true &&
+                    <Lightbox
+                        image={dataImagePreview.url}
+                        title={dataImagePreview.title}
+                        onClose={() => setIsShowPreviewImage(false)}
+                    >
+                    </Lightbox>
                 }
             </div>
         </div>
