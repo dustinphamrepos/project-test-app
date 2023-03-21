@@ -4,6 +4,7 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { FaMinusSquare } from "react-icons/fa";
 import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 import _ from 'lodash'
 import Lightbox from "react-awesome-lightbox";
 import './Questions.scss'
@@ -14,24 +15,24 @@ import {
 } from "../../../../services/apiService";
 
 const Questions = (props) => {
-
-    const [questions, setQuestions] = useState(
-        [
+    const [isValidAnswerColor, setIsValidAnswerColor] = useState(false)
+    const [isValidQuestionColor, setIsValidQuestionColor] = useState(false)
+    const initQuestions = [{
+        id: uuidv4(),
+        description: '',
+        imageFile: '',
+        imageName: '',
+        isValidQuestionColor: false,
+        answers: [
             {
                 id: uuidv4(),
                 description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    },
-                ]
+                isCorrect: false,
+                isValidAnswerColor: false
             },
         ]
-    )
+    }]
+    const [questions, setQuestions] = useState(initQuestions)
 
     const [isShowPreviewImage, setIsShowPreviewImage] = useState(false)
     const [dataImagePreview, setDataImagePreview] = useState({
@@ -107,6 +108,7 @@ const Questions = (props) => {
     }
 
     const handleOnChangeQuestion = (type, questionId, value) => {
+        setIsValidQuestionColor(false)
         let questionsClone = _.cloneDeep(questions)
         let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
         if (index > -1 && type === 'QUESTION') {
@@ -127,6 +129,7 @@ const Questions = (props) => {
     }
 
     const handleAnswerOfQuestion = (type, questionId, answerId, value) => {
+        setIsValidAnswerColor(false)
         let questionsClone = _.cloneDeep(questions)
         let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
         if (index > -1) {
@@ -160,24 +163,91 @@ const Questions = (props) => {
 
     }
     const handleSubmitQuestionsForQuiz = async () => {
+
         // todo: validate data
-        // console.log(questions, selectedQuiz);
-        // submit questions
-        await Promise.all(questions.map(async (question) => {
-            let q = await postCreateNewQuestionForQuiz(
+        // 1. validate quiz
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error('Please choose a quiz!')
+            return;
+        }
+
+        // 2. validate answer
+        let isValidAnswer = true
+        let indexQuestionOfAnswer = 0, indexAnswer = 0
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    isValidAnswer = false
+                    indexAnswer = j
+                    break;
+                }
+            }
+            indexQuestionOfAnswer = i
+            if (isValidAnswer === false) break;
+        }
+        if (isValidAnswer === false) {
+            questions[indexQuestionOfAnswer].answers[indexAnswer].isValidAnswerColor = isValidAnswerColor
+            // setIsValidAnswerColor(!questions[indexQuestionOfAnswer].answers[indexAnswer].isValidAnswerColor)
+            setIsValidAnswerColor(true)
+            toast.error(`Not empty description for answer ${indexAnswer + 1} at question ${indexQuestionOfAnswer + 1}`)
+            return
+        }
+        // console.log(isValidAnswer, 'Q: ', indexQuestion, 'A: ', indexAnswer)
+
+        // 3. validate question
+        let isValidQuestion = true
+        let indexQuestion = 0
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                isValidQuestion = false
+                indexQuestion = i
+                break;
+            }
+        }
+        if (isValidQuestion === false) {
+            questions[indexQuestion].isValidQuestionColor = isValidQuestionColor
+            // setIsValidQuestionColor(!questions[indexQuestion].isValidQuestionColor)
+            setIsValidQuestionColor(true)
+            toast.error(`Not empty description for question ${indexQuestion + 1}`)
+            return
+        }
+
+        // submit questions with Promise.all (sẽ trả ra danh sách kết quả không giống thứ tự user nhập vào)
+        // await Promise.all(questions.map(async (question) => {
+        //     let q = await postCreateNewQuestionForQuiz(
+        //         +selectedQuiz.value,
+        //         question.description,
+        //         question.imageFile
+        //     )
+        //     // submit answers
+        //     await Promise.all(question.answers.map(async (answer) => {
+        //         await postCreateNewAnswerForQuestion(
+        //             answer.description,
+        //             answer.isCorrect,
+        //             +q.DT.id
+        //         )
+        //     }))
+        // }))
+
+
+        // submit questions with for-of loop (trả ra danh sách đúng thứ tự)
+        for (const question of questions) {
+            const q = await postCreateNewQuestionForQuiz(
                 +selectedQuiz.value,
                 question.description,
                 question.imageFile
             )
-            // submit answers
-            await Promise.all(question.answers.map(async (answer) => {
+            // submit answer
+            for (const answer of question.answers) {
                 await postCreateNewAnswerForQuestion(
                     answer.description,
                     answer.isCorrect,
                     +q.DT.id
                 )
-            }))
-        }))
+            }
+        }
+        toast.success('Create questions and answers succeed!')
+        setQuestions(initQuestions)
     }
 
     return (
@@ -205,7 +275,7 @@ const Questions = (props) => {
                                     <div className="form-floating description">
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${isValidQuestionColor === true ? "is-invalid" : ""}`}
                                             placeholder="name@example.com"
                                             value={question.description}
                                             onChange={(e) => handleOnChangeQuestion('QUESTION', question.id, e.target.value)}
@@ -264,7 +334,7 @@ const Questions = (props) => {
                                                     <div className="form-floating answer-name">
                                                         <input
                                                             type="text"
-                                                            className="form-control"
+                                                            className={`form-control ${isValidAnswerColor === true ? "is-invalid" : ""}`}
                                                             placeholder="name@example.com"
                                                             value={answer.description}
                                                             onChange={e => handleAnswerOfQuestion('ANSWER', question.id, answer.id, e.target.value)}
