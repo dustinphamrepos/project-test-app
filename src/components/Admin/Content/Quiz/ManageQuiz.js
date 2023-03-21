@@ -7,6 +7,8 @@ import { postCreateNewQuiz, getAllQuizForAdmin } from '../../../../services/apiS
 import TableQuiz from './TableQuiz'
 import ModalEditQuiz from './ModalEditQuiz'
 import ModalDeleteQuiz from './ModalDeleteQuiz'
+import QuizQA from './QuizQA'
+import AssignQuiz from './AssignQuiz'
 
 
 const options = [
@@ -77,7 +79,7 @@ const ManageQuiz = (props) => {
         <div className="quiz-container">
             <Accordion defaultActiveKey="0" flush>
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header>Manage Quiz</Accordion.Header>
+                    <Accordion.Header>Manage Quizzes</Accordion.Header>
                     <Accordion.Body>
                         <div className="add-new">
                             <fieldset className="border rounded-3 p-3">
@@ -128,19 +130,31 @@ const ManageQuiz = (props) => {
                                 </div>
                             </fieldset>
                         </div>
+                        <div className="list-detail">
+                            <TableQuiz
+                                listQuizzes={listQuizzes}
+                                setListQuizzes={setListQuizzes}
+                                fetchListQuizzes={fetchListQuizzes}
+                                handleClickEditQuiz={handleClickEditQuiz}
+                                handleClickDeleteQuiz={handleClickDeleteQuiz}
+                            />
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Update Q/A quizzes</Accordion.Header>
+                    <Accordion.Body>
+                        <QuizQA />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header>Assign to Users</Accordion.Header>
+                    <Accordion.Body>
+                        <AssignQuiz />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
             <hr />
-            <div className="list-detail">
-                <TableQuiz
-                    listQuizzes={listQuizzes}
-                    setListQuizzes={setListQuizzes}
-                    fetchListQuizzes={fetchListQuizzes}
-                    handleClickEditQuiz={handleClickEditQuiz}
-                    handleClickDeleteQuiz={handleClickDeleteQuiz}
-                />
-            </div>
             <ModalEditQuiz
                 show={showModalEditQuiz}
                 setShow={setShowModalEditQuiz}

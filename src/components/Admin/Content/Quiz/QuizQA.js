@@ -7,14 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import _ from 'lodash'
 import Lightbox from "react-awesome-lightbox";
-import './Questions.scss'
+import './QuizQA.scss'
 import {
     getAllQuizForAdmin,
     postCreateNewAnswerForQuestion,
     postCreateNewQuestionForQuiz
 } from "../../../../services/apiService";
 
-const Questions = (props) => {
+const QuizQA = (props) => {
     const [isValidAnswerColor, setIsValidAnswerColor] = useState(false)
     const [isValidQuestionColor, setIsValidQuestionColor] = useState(false)
     const initQuestions = [{
@@ -249,10 +249,6 @@ const Questions = (props) => {
 
     return (
         <div className="questions-container">
-            <div className="title">
-                aaa
-            </div>
-            <hr />
             <div className="add-new-question">
                 <div className="col-6 form-group">
                     <label className="mb-2">Select quiz</label>
@@ -385,4 +381,4 @@ const Questions = (props) => {
     );
 }
 
-export default Questions;
+export default QuizQA;
