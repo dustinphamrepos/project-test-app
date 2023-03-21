@@ -12,7 +12,8 @@ import {
     getAllQuizForAdmin,
     postCreateNewAnswerForQuestion,
     postCreateNewQuestionForQuiz,
-    getQuizWithQA
+    getQuizWithQA,
+    postUpsertQA
 } from "../../../../services/apiService";
 
 const QuizQA = (props) => {
@@ -54,7 +55,7 @@ const QuizQA = (props) => {
             let newListQuizzes = res.DT.map(item => {
                 return {
                     value: item.id,
-                    label: `${item.id} - ${item.description}`
+                    label: `${item.id} - ${item.name}`
                 }
             })
             setListQuizzes(newListQuizzes)
@@ -89,8 +90,8 @@ const QuizQA = (props) => {
                 newQA.push(q)
             }
             setQuestions(newQA)
-            console.log('check', res);
-            console.log(newQA)
+            // console.log('check', res);
+            // console.log(newQA)
         }
     }
 
@@ -241,43 +242,29 @@ const QuizQA = (props) => {
             return
         }
 
-
-        // submit questions with Promise.all (sẽ trả ra danh sách kết quả không giống thứ tự user nhập vào)
-        // await Promise.all(questions.map(async (question) => {
-        //     let q = await postCreateNewQuestionForQuiz(
-        //         +selectedQuiz.value,
-        //         question.description,
-        //         question.imageFile
-        //     )
-        //     // submit answers
-        //     await Promise.all(question.answers.map(async (answer) => {
-        //         await postCreateNewAnswerForQuestion(
-        //             answer.description,
-        //             answer.isCorrect,
-        //             +q.DT.id
-        //         )
-        //     }))
-        // }))
-
-
-        // submit questions with for-of loop (trả ra danh sách đúng thứ tự)
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile
-            )
-            // submit answer
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description,
-                    answer.isCorrect,
-                    +q.DT.id
-                )
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+        let questionsClone = _.cloneDeep(questions)
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await toBase64(questionsClone[i].imageFile)
             }
         }
-        toast.success('Create questions and answers succeed!')
-        setQuestions(initQuestions)
+        console.log(questionsClone)
+        let res = await postUpsertQA(
+            {
+                quizId: selectedQuiz.value,
+                questions: questionsClone
+            }
+        )
+        if (res && res.EC === 0) {
+            toast.success(res.EM)
+            fetchQuizWithQA()
+        }
     }
 
     return (

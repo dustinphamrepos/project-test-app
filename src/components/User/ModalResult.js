@@ -19,14 +19,12 @@ const ModalResult = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        Total questions: 
-                        <b>
+                        Total questions: <b>
                             {dataModalResult.countTotal}
                         </b>
                     </div>
                     <div>
-                        Total correct answers: 
-                        <b>
+                        Total correct answers: <b>
                             {dataModalResult.countCorrect}
                         </b>
                     </div>
