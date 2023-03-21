@@ -371,7 +371,6 @@ const Questions = (props) => {
                     </div>
                 }
 
-
                 {isShowPreviewImage === true &&
                     <Lightbox
                         image={dataImagePreview.url}
