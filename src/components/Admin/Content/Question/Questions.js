@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { FaMinusSquare } from "react-icons/fa";
@@ -7,17 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash'
 import Lightbox from "react-awesome-lightbox";
 import './Questions.scss'
-
-const options =
-    [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
+import {
+    getAllQuizForAdmin,
+    postCreateNewAnswerForQuestion,
+    postCreateNewQuestionForQuiz
+} from "../../../../services/apiService";
 
 const Questions = (props) => {
 
-    const [selectedQuiz, setSelectedQuiz] = useState({})
     const [questions, setQuestions] = useState(
         [
             {
@@ -41,6 +38,27 @@ const Questions = (props) => {
         title: '',
         url: ''
     })
+
+    const [selectedQuiz, setSelectedQuiz] = useState({})
+    const [listQuizzes, setListQuizzes] = useState([])
+
+    useEffect(() => {
+        fetchListQuizzes()
+    }, [])
+
+    const fetchListQuizzes = async () => {
+        let res = await getAllQuizForAdmin()
+        if (res && res.EC === 0) {
+            let newListQuizzes = res.DT.map(item => {
+                return {
+                    value: item.id,
+                    label: `${item.id} - ${item.description}`
+                }
+            })
+            setListQuizzes(newListQuizzes)
+        }
+    }
+    // console.log(listQuizzes)
 
     const handleChangeAmountQuestions = (type, id) => {
         if (type === 'ADD') {
@@ -127,10 +145,6 @@ const Questions = (props) => {
         }
     }
 
-    const handleSubmitQuestionsForQuiz = () => {
-        console.log(questions);
-    }
-
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions)
         let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
@@ -145,6 +159,27 @@ const Questions = (props) => {
         }
 
     }
+    const handleSubmitQuestionsForQuiz = async () => {
+        // todo: validate data
+        // console.log(questions, selectedQuiz);
+        // submit questions
+        await Promise.all(questions.map(async (question) => {
+            let q = await postCreateNewQuestionForQuiz(
+                +selectedQuiz.value,
+                question.description,
+                question.imageFile
+            )
+            // submit answers
+            await Promise.all(question.answers.map(async (answer) => {
+                await postCreateNewAnswerForQuestion(
+                    answer.description,
+                    answer.isCorrect,
+                    +q.DT.id
+                )
+            }))
+        }))
+    }
+
     return (
         <div className="questions-container">
             <div className="title">
@@ -157,7 +192,7 @@ const Questions = (props) => {
                     <Select
                         value={selectedQuiz}
                         onChange={setSelectedQuiz}
-                        options={options}
+                        options={listQuizzes}
                     />
                 </div>
                 <div className="mt-3 mb-2">Add questions:</div>
