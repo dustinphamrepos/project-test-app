@@ -47,7 +47,7 @@ const DetailQuiz = () => {
                     return { questionId: key, answers, questionDescription, image }
                 })
                 .value()
-            // console.log(data)
+            console.log(data)
             setDataQuiz(data)
         }
     }

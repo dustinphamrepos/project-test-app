@@ -5,6 +5,7 @@ const Question = (props) => {
     if (_.isEmpty(data)) {
         return (<></>)
     }
+    // console.log('>>>>>>>>>>>>>>>',data)
     const handleHandleCheckbox = (e, aId, qId) => {
         // console.log('>>>', e.target.checked)
         // console.log('data >>> ', data, aId, qId)

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import PrivateRoute;
 import App from './App';
 import Admin from './components/Admin/Admin'
 import HomePage from './components/Home/HomePage';
@@ -27,7 +28,12 @@ const Layout = (props) => {
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<HomePage />} />
-                    <Route path="/users" element={<ListQuiz />} />
+                    <Route path="/users" element={
+                        // <PrivateRoute>
+                            <ListQuiz />
+                        // </PrivateRoute>
+                    }
+                    />
                 </Route>
                 <Route path="/quiz/:id" element={<DetailQuiz />} />
                 <Route path="/admins" element={<Admin />}>

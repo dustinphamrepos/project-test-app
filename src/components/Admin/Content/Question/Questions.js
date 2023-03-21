@@ -122,7 +122,7 @@ const Questions = (props) => {
         let index = questionsClone.findIndex(questionClone => questionClone.id === questionId)
         if (index > -1 && e.target && e.target.files && e.target.files[0]) {
             questionsClone[index].imageFile = e.target.files[0]
-            // console.log(e.target.files[0])
+            console.log(e.target.files[0])
             questionsClone[index].imageName = e.target.files[0].name
             setQuestions(questionsClone)
         }
