@@ -24,7 +24,7 @@ const DetailQuiz = () => {
     }, [quizId])
     const fetchQuestions = async () => {
         let res = await getDataQuiz(quizId)
-        // console.log("check", res);
+        console.log("check", res);
         if (res && res.EC === 0) {
             let raw = res.DT
             // console.log('...', raw)
@@ -43,12 +43,12 @@ const DetailQuiz = () => {
                         item.answers.isSelected = false
                         answers.push(item.answers)
                     })
-                    // console.log('value: ', value)
-                    // console.log('>>>>>key: ', key)
+                    console.log('value: ', value)
+                    console.log('>>>>>key: ', key)
                     return { questionId: key, answers, questionDescription, image }
                 })
                 .value()
-            console.log(data)
+            // console.log(data)
             setDataQuiz(data)
         }
     }
@@ -185,6 +185,7 @@ const DetailQuiz = () => {
                 <RightContent
                     dataQuiz={dataQuiz}
                     handleFinishQuiz={handleFinishQuiz}
+                    setIndexOfCurrentQuestion={setIndexOfCurrentQuestion}
                 />
             </div>
             <ModalResult
