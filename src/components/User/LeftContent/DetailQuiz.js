@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import _ from 'lodash'
-import { getDataQuiz, postSubmitAnswersQuiz } from "../../services/apiService";
+import { getDataQuiz, postSubmitAnswersQuiz } from "../../../services/apiService";
 import './DetailQuiz.scss'
 import Question from "./Question";
 import ModalResult from "./ModalResult";
-import RightContent from "./Content/RightContent";
+import RightContent from "../RightContent/RightContent";
 
 const DetailQuiz = () => {
     const params = useParams()
@@ -184,6 +184,7 @@ const DetailQuiz = () => {
             <div className="right-content">
                 <RightContent
                     dataQuiz={dataQuiz}
+                    handleFinishQuiz={handleFinishQuiz}
                 />
             </div>
             <ModalResult

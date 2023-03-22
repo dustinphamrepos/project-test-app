@@ -9,8 +9,8 @@ import ManageUser from './components/Admin/Content/TodoWithUser/ManageUser'
 import Dashboard from './components/Admin/Content/DashBoard'
 import Login from './components/Auth/Login';
 import Register from "./components/Auth/Register";
-import ListQuiz from "./components/User/ListQuiz";
-import DetailQuiz from "./components/User/DetailQuiz";
+import ListQuiz from "./components/User/LeftContent/ListQuiz";
+import DetailQuiz from "./components/User/LeftContent/DetailQuiz";
 import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import Questions from "./components/Admin/Content/Question/Questions";
 
@@ -30,7 +30,7 @@ const Layout = (props) => {
                     <Route index element={<HomePage />} />
                     <Route path="/users" element={
                         // <PrivateRoute>
-                            <ListQuiz />
+                        <ListQuiz />
                         // </PrivateRoute>
                     }
                     />

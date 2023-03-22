@@ -1,16 +1,23 @@
+import CountDown from "./CountDown";
+
 const RightContent = (props) => {
   const { dataQuiz } = props
+  const onTimeUp = () => {
+    props.handleFinishQuiz()
+  }
   console.log(dataQuiz)
   return (
     <>
       <div className="main-timer">
-        10: 10
+        <CountDown
+          onTimeUp={onTimeUp}
+        />
       </div>
       <div className="main-question">
         {dataQuiz && dataQuiz.length > 0 &&
           dataQuiz.map((question, index) => {
             return (
-              <div key={question.id} className="question">{index + 1}</div>
+              <div key={question.questionId} className="question">{index + 1}</div>
             )
           })}
       </div>
