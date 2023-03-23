@@ -3,5 +3,4 @@ const DashBoard = (props) => {
         <div>Dash Board</div>
     )
 }
-
 export default DashBoard
