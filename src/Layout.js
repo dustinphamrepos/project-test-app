@@ -5,7 +5,7 @@ import App from './App';
 import Admin from './components/Admin/Admin'
 import HomePage from './components/Home/HomePage';
 import ManageUser from './components/Admin/Content/TodoWithUser/ManageUser'
-import Dashboard from './components/Admin/Content/DashBoard'
+import Dashboard from './components/Admin/Content/DashBoard/DashBoard'
 import Login from './components/Auth/Login';
 import Register from "./components/Auth/Register";
 import ListQuiz from "./components/User/LeftContent/ListQuiz";

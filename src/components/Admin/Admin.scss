@@ -9,8 +9,23 @@
     .admin-content {
         width: 100%;
         .admin-header {
-            height: 40px;
-            border: 1px solid green;
+            height: 60px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px 0 10px;
+            align-items: center;
+
+            .left-side {
+                cursor: pointer;
+                font-size: 30px;
+                color: #666
+            }
+
+            .right-side {
+                display: flex;
+                gap: 15px;
+            }
         }
         .admin-main {
             height: calc(100vh - 60px);
