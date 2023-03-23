@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import videoHomepage from '../../assets/video-homepage.mp4'
 
 const HomePage = (props) => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     return (
         <div className="homepage-container">
@@ -16,17 +18,17 @@ const HomePage = (props) => {
             </video>
             <div className='homepage-content'>
                 <div className='title-1'>
-                    There's a better way to ask
+                    {t('homepage.title1')}
                 </div>
                 <div className='title-2'>
-                    You don't want to make a boring form. And your audience won't answer one. Create a typeform instead—and make everyone happy.
+                {t('homepage.title2')}
                 </div>
                 <div className='title-3'>
                     {isAuthenticated === false
                         ?
-                        <button onClick={() => navigate('/login')}>Get's started. It's free</button>
+                        <button onClick={() => navigate('/login')}>{t('homepage.title3')}</button>
                         :
-                        <button onClick={() => navigate('/users')}>Doing quiz now</button>
+                        <button onClick={() => navigate('/users')}>{t('homepage.title4')}</button>
                     }
                 </div>
             </div>
