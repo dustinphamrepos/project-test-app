@@ -6,6 +6,7 @@ import { ImSpinner6 } from 'react-icons/im'
 import './Login.scss'
 import { postLogin } from '../../services/apiService';
 import { doLogin } from '../../redux/action/userAction';
+import Languages from '../Header/Languages';
 
 
 const Login = (props) => {
@@ -64,6 +65,7 @@ const Login = (props) => {
             <div className='header'>
                 <span>Do you have an account yet?</span>
                 <button onClick={() => navigate('/register')}>Sign up</button>
+                <Languages />
             </div>
             <div className='title col-4 mx-auto'>
                 TrungDuc

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { doLogOut } from '../../redux/action/userAction';
+import Languages from './Languages';
 
 const Header = () => {
 
@@ -56,11 +57,12 @@ const Header = () => {
                                 <button className='btn-signup' onClick={() => handleSignUp()}>Sign up</button>
                             </>
                             :
-                            <NavDropdown title="Setting" id="basic-nav-dropdown">
+                            <NavDropdown title="Setting" id="basic-nav-dropdown2">
                                 <NavDropdown.Item>Profile</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => handleLogOut()}>Log out</NavDropdown.Item>
                             </NavDropdown>
                         }
+                        <Languages />
                     </Nav>
                 </Navbar.Collapse>
             </Container>
