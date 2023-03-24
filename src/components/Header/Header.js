@@ -9,8 +9,12 @@ import { logOut } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { doLogOut } from '../../redux/action/userAction';
 import Languages from './Languages';
+import Profile from './Profile';
+import { useState } from 'react';
 
 const Header = () => {
+
+    const [isShowModalProfile, setIsShowModalProfile] = useState(false)
 
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const account = useSelector(state => state.user.account)
@@ -39,38 +43,44 @@ const Header = () => {
         console.log('>>>:', res)
     }
     return (
-        <Navbar bg="light" expand="lg">
-            <Container>
-                {/* <Navbar.Brand href="#home">Hoi dan IT</Navbar.Brand> */}
-                <NavLink to="/" className='navbar-brand'>
-                    <FaReact className="brand-icon" />
-                    Hoi Trung Duc
-                </NavLink>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <NavLink to="/" className='nav-link'>Home</NavLink>
-                        <NavLink to="users" className='nav-link'>Users</NavLink>
-                        <NavLink to="admins" className='nav-link'>Admin</NavLink>
-                    </Nav>
-                    <Nav>
-                        {isAuthenticated === false
-                            ?
-                            <>
-                                <button className='btn-login' onClick={() => handleLogin()}>Log in</button>
-                                <button className='btn-signup' onClick={() => handleSignUp()}>Sign up</button>
-                            </>
-                            :
-                            <NavDropdown title="Setting" id="basic-nav-dropdown2">
-                                <NavDropdown.Item>Profile</NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => handleLogOut()}>Log out</NavDropdown.Item>
-                            </NavDropdown>
-                        }
-                        <Languages />
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+        <>
+            <Navbar bg="light" expand="lg">
+                <Container>
+                    {/* <Navbar.Brand href="#home">Hoi dan IT</Navbar.Brand> */}
+                    <NavLink to="/" className='navbar-brand'>
+                        <FaReact className="brand-icon" />
+                        Hoi Trung Duc
+                    </NavLink>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <NavLink to="/" className='nav-link'>Home</NavLink>
+                            <NavLink to="users" className='nav-link'>Users</NavLink>
+                            <NavLink to="admins" className='nav-link'>Admin</NavLink>
+                        </Nav>
+                        <Nav>
+                            {isAuthenticated === false
+                                ?
+                                <>
+                                    <button className='btn-login' onClick={() => handleLogin()}>Log in</button>
+                                    <button className='btn-signup' onClick={() => handleSignUp()}>Sign up</button>
+                                </>
+                                :
+                                <NavDropdown title="Setting" id="basic-nav-dropdown2">
+                                    <NavDropdown.Item onClick={() => setIsShowModalProfile(true)}>Profile</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={() => handleLogOut()}>Log out</NavDropdown.Item>
+                                </NavDropdown>
+                            }
+                            <Languages />
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+            <Profile
+                show={isShowModalProfile}
+                setShow={setIsShowModalProfile}
+            />
+        </>
     );
 }
 

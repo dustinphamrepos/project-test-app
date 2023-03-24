@@ -9,6 +9,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.modal-content {
+  // width: 60vw !important;
+
+}
+
 .languages {
   .dropdown-toggle::after {
     display: none !important;
