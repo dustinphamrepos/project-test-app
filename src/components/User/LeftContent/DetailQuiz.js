@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import _ from 'lodash'
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { getDataQuiz, postSubmitAnswersQuiz } from "../../../services/apiService";
 import './DetailQuiz.scss'
 import Question from "./Question";
 import ModalResult from "./ModalResult";
 import RightContent from "../RightContent/RightContent";
+import { NavLink } from "react-bootstrap";
 
 const DetailQuiz = () => {
     const params = useParams()
@@ -143,58 +145,71 @@ const DetailQuiz = () => {
     }
 
     return (
-        <div className="detail-quiz-container">
-            <div className="left-content">
-                <div className="title">
-                    Quiz {quizId}: {location?.state?.quizTitle}
+        <>
+            <Breadcrumb className="quiz-detail-new-header">
+                <NavLink to='/' className="breadcrumb-item">
+                    Homepage
+                </NavLink>
+                <NavLink to='/users' className="breadcrumb-item">
+                    User
+                </NavLink>
+                <Breadcrumb.Item active>
+                    Do quiz
+                </Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="detail-quiz-container">
+                <div className="left-content">
+                    <div className="title">
+                        Quiz {quizId}: {location?.state?.quizTitle}
+                    </div>
+                    <hr />
+                    <div className="q-content">
+                        <Question
+                            index={indexOfCurrentQuestion}
+                            handleCheckbox={handleCheckbox}
+                            data={
+                                dataQuiz && dataQuiz.length > 0
+                                    ?
+                                    dataQuiz[indexOfCurrentQuestion]
+                                    :
+                                    []
+                            } />
+                    </div>
+                    <div className="footer">
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => handlePrev()}
+                        >
+                            Prev
+                        </button>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => handleNext()}
+                        >
+                            Next
+                        </button>
+                        <button
+                            className="btn btn-warning"
+                            onClick={() => handleFinishQuiz()}
+                        >
+                            Finish
+                        </button>
+                    </div>
                 </div>
-                <hr />
-                <div className="q-content">
-                    <Question
-                        index={indexOfCurrentQuestion}
-                        handleCheckbox={handleCheckbox}
-                        data={
-                            dataQuiz && dataQuiz.length > 0
-                                ?
-                                dataQuiz[indexOfCurrentQuestion]
-                                :
-                                []
-                        } />
+                <div className="right-content">
+                    <RightContent
+                        dataQuiz={dataQuiz}
+                        handleFinishQuiz={handleFinishQuiz}
+                        setIndexOfCurrentQuestion={setIndexOfCurrentQuestion}
+                    />
                 </div>
-                <div className="footer">
-                    <button
-                        className="btn btn-secondary"
-                        onClick={() => handlePrev()}
-                    >
-                        Prev
-                    </button>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => handleNext()}
-                    >
-                        Next
-                    </button>
-                    <button
-                        className="btn btn-warning"
-                        onClick={() => handleFinishQuiz()}
-                    >
-                        Finish
-                    </button>
-                </div>
-            </div>
-            <div className="right-content">
-                <RightContent
-                    dataQuiz={dataQuiz}
-                    handleFinishQuiz={handleFinishQuiz}
-                    setIndexOfCurrentQuestion={setIndexOfCurrentQuestion}
+                <ModalResult
+                    show={isShowModalResult}
+                    setShow={setIsShowModalResult}
+                    dataModalResult={dataModalResult}
                 />
             </div>
-            <ModalResult
-                show={isShowModalResult}
-                setShow={setIsShowModalResult}
-                dataModalResult={dataModalResult}
-            />
-        </div>
+        </>
     );
 }
 

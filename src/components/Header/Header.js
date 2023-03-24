@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaReact } from "react-icons/fa";
 import { logOut } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { doLogOut } from '../../redux/action/userAction';
@@ -41,7 +42,10 @@ const Header = () => {
         <Navbar bg="light" expand="lg">
             <Container>
                 {/* <Navbar.Brand href="#home">Hoi dan IT</Navbar.Brand> */}
-                <NavLink to="/" className='navbar-brand'>Hoi Trung Duc</NavLink>
+                <NavLink to="/" className='navbar-brand'>
+                    <FaReact className="brand-icon" />
+                    Hoi Trung Duc
+                </NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import _ from 'lodash'
 import Lightbox from "react-awesome-lightbox";
+import { useTranslation } from 'react-i18next'
 import './Questions.scss'
 import {
     getAllQuizForAdmin,
@@ -15,6 +16,8 @@ import {
 } from "../../../../services/apiService";
 
 const Questions = (props) => {
+    const { t } = useTranslation()
+
     const [isValidAnswerColor, setIsValidAnswerColor] = useState(false)
     const [isValidQuestionColor, setIsValidQuestionColor] = useState(false)
     const initQuestions = [{
@@ -250,19 +253,19 @@ const Questions = (props) => {
     return (
         <div className="questions-container">
             <div className="title">
-                aaa
+                {t('questions.title1')}
             </div>
             <hr />
             <div className="add-new-question">
                 <div className="col-6 form-group">
-                    <label className="mb-2">Select quiz</label>
+                    <label className="mb-2">{t('questions.title2')}</label>
                     <Select
                         value={selectedQuiz}
                         onChange={setSelectedQuiz}
                         options={listQuizzes}
                     />
                 </div>
-                <div className="mt-3 mb-2">Add questions:</div>
+                <div className="mt-3 mb-2">{t('questions.title-ques.title')}</div>
                 {
                     questions && questions.length > 0 &&
                     questions.map((question, index) => {
@@ -277,7 +280,7 @@ const Questions = (props) => {
                                             value={question.description}
                                             onChange={(e) => handleOnChangeQuestion('QUESTION', question.id, e.target.value)}
                                         />
-                                        <label>Question {index + 1}'s description</label>
+                                        <label>{t('questions.title-ques.title-ques1')} {index + 1}{t('questions.title-ques.title-ques2')}</label>
                                     </div>
                                     <div className="group-upload">
                                         <label htmlFor={`${question.id}`}>
@@ -299,7 +302,7 @@ const Questions = (props) => {
                                                     {question.imageName}
                                                 </span>
                                                 :
-                                                '0 file is uploaded'
+                                                `${t('questions.title-ques.title-ques3')}`
                                             }
                                         </span>
                                     </div>
@@ -336,7 +339,7 @@ const Questions = (props) => {
                                                             value={answer.description}
                                                             onChange={e => handleAnswerOfQuestion('ANSWER', question.id, answer.id, e.target.value)}
                                                         />
-                                                        <label>Answer {index + 1}</label>
+                                                        <label>{t('questions.title-ans.title-ans1')} {index + 1}</label>
                                                     </div>
                                                 </div>
                                                 <div className="btn-change-amount-answers">
@@ -366,7 +369,7 @@ const Questions = (props) => {
                             className="btn btn-warning"
                             onClick={() => handleSubmitQuestionsForQuiz()}
                         >
-                            Save questions
+                            {t('questions.title3')}
                         </button>
                     </div>
                 }

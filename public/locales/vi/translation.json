@@ -4,5 +4,69 @@
       "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead—and make everyone happy.",
       "title3": "Bắt đầu nào",
       "title4": "Làm bài kiểm tra ngay"
-    }
+    },
+    "questions": {
+      "title1": "Quản lý câu hỏi",
+      "title2": "Chọn bài kiểm tra",
+      "title-ques": {
+        "title": "Thêm câu hỏi:",
+        "title-ques1": "Câu hỏi",
+        "title-ques2": " có nội dung là...",
+        "title-ques3": "Thư mục trống"
+      },
+      "title-ans": {
+        "title-ans1": "Câu trả lời"
+      },
+      "title3": "Lưu câu hỏi"
+    },
+    "asign-quiz": {
+      "asign-quiz1": "Chọn bài kiểm tra:",
+      "asign-quiz2": "Chọn người dùng:",
+      "asign-quiz3": "Gán"
+    },
+    "manage-quiz": {
+      "manage-quiz-1": "Quản lý bài kiểm tra",
+      "manage-quiz-2": "Thêm mới bài kiểm tra",
+      "manage-quiz-3": "Tên",
+      "manage-quiz-4": "Nội dung",
+      "manage-quiz-5": "Tải ảnh lên",
+      "manage-quiz-6": "Lưu",
+      "manage-quiz-7": "Cập nhật",
+      "manage-quiz-8": "Gán cho người dùng"
+    },
+    "modal-delete-quiz": {
+      "modal-delete-quiz-1": "Xác nhận xóa bài kiểm tra",
+      "modal-delete-quiz-2": "Bạn có chắc chắn muốn xóa bài kiểm tra",
+      "modal-delete-quiz-3": "Hủy",
+      "modal-delete-quiz-4": "Xác nhận"
+    },
+    "modal-edit-quiz": {
+      "modal-edit-quiz-1": "Chỉnh sửa bài kiểm tra",
+      "modal-edit-quiz-2": "Tên",
+      "modal-edit-quiz-3": "Nội dung",
+      "modal-edit-quiz-4": "Tải ảnh lên",
+      "modal-edit-quiz-5": "Xem trước ảnh",
+      "modal-edit-quiz-6": "Đóng",
+      "modal-edit-quiz-7": "Lưu",
+      "modal-edit-quiz-8": "Mức độ"
+    },
+    "quizQA": {
+      "quizQA-1": "Chọn bài kiểm tra",
+      "quizQA-2": "Thêm câu hỏi:",
+      "quizQA-3": "Câu hỏi",
+      "quizQA-4": "có nội dung là...",
+      "quizQA-5": "Không có ảnh được tải lên",
+      "quizQA-6": "Câu trả lời",
+      "quizQA-7": "Lưu câu hỏi"
+    },
+    "tableQuiz": {
+      "tableQuiz-1": "Danh sách bài kiểm tra: ",
+      "tableQuiz-2": "ID",
+      "tableQuiz-3": "Tên",
+      "tableQuiz-4": "Nôi dung",
+      "tableQuiz-5": "Mức độ",
+      "tableQuiz-6": "Hành động",
+      "tableQuiz-7": "Chỉnh sửa",
+      "tableQuiz-8": "Xóa"
+    } 
 }

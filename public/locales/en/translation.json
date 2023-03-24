@@ -4,5 +4,71 @@
       "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead—and make everyone happy.",
       "title3": "Get's started. It's free",
       "title4": "Doing quiz now"
+    },
+    "questions": {
+      "title1": "Control questions",
+      "title2": "Select quiz",
+      "title-ques": {
+        "title": "Add questions:",
+        "title-ques1": "Question",
+        "title-ques2": "'s description",
+        "title-ques3": "0 file is uploaded"
+      },
+      "title-ans": {
+        "title-ans1": "Answer",
+        "title-ques2": "'s description",
+        "title-ques3": "0 file is uploaded"
+      },
+      "title3": "Save questions"
+    },
+    "asign-quiz": {
+      "asign-quiz1": "Select quiz:",
+      "asign-quiz2": "Select user:",
+      "asign-quiz3": "Assign"
+    },
+    "manage-quiz": {
+      "manage-quiz-1": "Manage Quizzes",
+      "manage-quiz-2": "Add new quiz",
+      "manage-quiz-3": "Name",
+      "manage-quiz-4": "Description",
+      "manage-quiz-5": "Upload image",
+      "manage-quiz-6": "Save",
+      "manage-quiz-7": "Update Q/A quizzes",
+      "manage-quiz-8": "Assign to Users"
+    },
+    "modal-delete-quiz": {
+      "modal-delete-quiz-1": "Confirm delete the quiz?",
+      "modal-delete-quiz-2": "Are you sure to delete quiz:",
+      "modal-delete-quiz-3": "Cancel",
+      "modal-delete-quiz-4": "Confirm"
+    },
+    "modal-edit-quiz": {
+      "modal-edit-quiz-1": "Edit a quiz",
+      "modal-edit-quiz-2": "Name",
+      "modal-edit-quiz-3": "Description",
+      "modal-edit-quiz-4": "Upload file Image",
+      "modal-edit-quiz-5": "Preview image",
+      "modal-edit-quiz-6": "Close",
+      "modal-edit-quiz-7": "Save",
+      "modal-edit-quiz-8": "Type"
+    },
+    "quizQA": {
+      "quizQA-1": "Select quiz",
+      "quizQA-2": "Add questions:",
+      "quizQA-3": "Question",
+      "quizQA-4": "'s description",
+      "quizQA-5": "0 file is uploaded",
+      "quizQA-6": "Answer",
+      "quizQA-7": "Save questions"
+    },
+    "tableQuiz": {
+      "tableQuiz-1": "List quizzes: ",
+      "tableQuiz-2": "ID",
+      "tableQuiz-3": "Name",
+      "tableQuiz-4": "Description",
+      "tableQuiz-5": "Type",
+      "tableQuiz-6": "Actions",
+      "tableQuiz-7": "Edit",
+      "tableQuiz-8": "Delete"
     }
 }

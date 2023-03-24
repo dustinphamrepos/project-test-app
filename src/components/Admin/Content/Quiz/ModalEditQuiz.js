@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import Select from 'react-select'
 import { FcPlus } from 'react-icons/fc'
 import React, { useEffect, useState } from 'react';
@@ -9,6 +10,8 @@ import { putEditQuiz } from '../../../../services/apiService';
 
 
 const ModalEditQuiz = (props) => {
+    const { t } = useTranslation()
+
     const { show, setShow, dataEditQuiz, resetDataEditQuiz, fetchListQuizzes, options } = props
 
     const [name, setName] = useState("")
@@ -57,7 +60,7 @@ const ModalEditQuiz = (props) => {
         }
     }
 
-    
+
     const handleUploadImage = (e) => {
         if (e.target && e.target.files && e.target.files[0]) {
             setPreviewImage(URL.createObjectURL(e.target.files[0]))
@@ -78,11 +81,11 @@ const ModalEditQuiz = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit a quiz</Modal.Title>
+                    <Modal.Title>{t('modal-edit-quiz.modal-edit-quiz-1')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body><form className="row g-3">
                     <div className="col-md-6">
-                        <label className="form-label">Name</label>
+                        <label className="form-label">{t('modal-edit-quiz.modal-edit-quiz-2')}</label>
                         <input
                             type="text"
                             className="form-control"
@@ -91,7 +94,7 @@ const ModalEditQuiz = (props) => {
                         />
                     </div>
                     <div className="col-md-6">
-                        <label className="form-label">Type</label>
+                        <label className="form-label">{t('modal-edit-quiz.modal-edit-quiz-8')}</label>
                         <Select
                             value={type}
                             onChange={setType}
@@ -100,7 +103,7 @@ const ModalEditQuiz = (props) => {
                         />
                     </div>
                     <div className="col-md-12">
-                        <label className="form-label">Description</label>
+                        <label className="form-label">{t('modal-edit-quiz.modal-edit-quiz-3')}</label>
                         <input
                             type="text"
                             className="form-control"
@@ -111,7 +114,7 @@ const ModalEditQuiz = (props) => {
                     <div className='col-md-12'>
                         <label className="form-label label-upload" htmlFor='labelUpload'>
                             <FcPlus />
-                            Upload file Image
+                            {t('modal-edit-quiz.modal-edit-quiz-4')}
                         </label>
                         <input
                             type='file'
@@ -125,17 +128,17 @@ const ModalEditQuiz = (props) => {
                             ?
                             <img src={previewImage} />
                             :
-                            <span>Preview image</span>
+                            <span>{t('modal-edit-quiz.modal-edit-quiz-5')}</span>
                         }
 
                     </div>
                 </form></Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                    {t('modal-edit-quiz.modal-edit-quiz-6')}
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmitEditQuiz()}>
-                        Save
+                    {t('modal-edit-quiz.modal-edit-quiz-7')}
                     </Button>
                 </Modal.Footer>
             </Modal>

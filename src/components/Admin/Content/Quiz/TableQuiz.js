@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect } from "react";
 
 const TableQuiz = (props) => {
+    const { t } = useTranslation()
+
     const { listQuizzes, fetchListQuizzes } = props
     useEffect(() => {
         fetchListQuizzes()
@@ -8,15 +11,15 @@ const TableQuiz = (props) => {
 
     return (
         <>
-            <div>List quizzes: </div>
+            <div>{t('tableQuiz.tableQuiz-1')}</div>
             <table className="table table-hover table-bordered my-2">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{t('tableQuiz.tableQuiz-2')}</th>
+                        <th scope="col">{t('tableQuiz.tableQuiz-3')}</th>
+                        <th scope="col">{t('tableQuiz.tableQuiz-4')}</th>
+                        <th scope="col">{t('tableQuiz.tableQuiz-5')}</th>
+                        <th scope="col">{t('tableQuiz.tableQuiz-6')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,19 +36,18 @@ const TableQuiz = (props) => {
                                         className="btn btn-warning"
                                         onClick={() => props.handleClickEditQuiz(quiz)}
                                     >
-                                        Edit
+                                        {t('tableQuiz.tableQuiz-7')}
                                     </button>
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => props.handleClickDeleteQuiz(quiz)}
                                     >
-                                        Delete
+                                        {t('tableQuiz.tableQuiz-8')}
                                     </button>
                                 </td>
                             </tr>
                         )
                     })}
-
                 </tbody>
             </table>
         </>

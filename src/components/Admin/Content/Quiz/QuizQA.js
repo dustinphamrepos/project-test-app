@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next'
 import Select from "react-select";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { FaMinusSquare } from "react-icons/fa";
@@ -17,6 +18,8 @@ import {
 } from "../../../../services/apiService";
 
 const QuizQA = (props) => {
+    const { t } = useTranslation()
+
     const [isValidAnswerColor, setIsValidAnswerColor] = useState(false)
     const [isValidQuestionColor, setIsValidQuestionColor] = useState(false)
     const initQuestions = [{
@@ -271,14 +274,14 @@ const QuizQA = (props) => {
         <div className="questions-container">
             <div className="add-new-question">
                 <div className="col-6 form-group">
-                    <label className="mb-2">Select quiz</label>
+                    <label className="mb-2">{t('quizQA.quizQA-1')}</label>
                     <Select
                         value={selectedQuiz}
                         onChange={setSelectedQuiz}
                         options={listQuizzes}
                     />
                 </div>
-                <div className="mt-3 mb-2">Add questions:</div>
+                <div className="mt-3 mb-2">{t('quizQA.quizQA-2')}</div>
                 {
                     questions && questions.length > 0 &&
                     questions.map((question, index) => {
@@ -293,7 +296,7 @@ const QuizQA = (props) => {
                                             value={question.description}
                                             onChange={(e) => handleOnChangeQuestion('QUESTION', question.id, e.target.value)}
                                         />
-                                        <label>Question {index + 1}'s description</label>
+                                        <label>{t('quizQA.quizQA-3')} {index + 1}{t('quizQA.quizQA-4')}</label>
                                     </div>
                                     <div className="group-upload">
                                         <label htmlFor={`${question.id}`}>
@@ -315,7 +318,7 @@ const QuizQA = (props) => {
                                                     {question.imageName}
                                                 </span>
                                                 :
-                                                '0 file is uploaded'
+                                                `{t('quizQA.quizQA-5')}`
                                             }
                                         </span>
                                     </div>
@@ -352,7 +355,7 @@ const QuizQA = (props) => {
                                                             value={answer.description}
                                                             onChange={e => handleAnswerOfQuestion('ANSWER', question.id, answer.id, e.target.value)}
                                                         />
-                                                        <label>Answer {index + 1}</label>
+                                                        <label>{t('quizQA.quizQA-6')} {index + 1}</label>
                                                     </div>
                                                 </div>
                                                 <div className="btn-change-amount-answers">
@@ -382,7 +385,7 @@ const QuizQA = (props) => {
                             className="btn btn-warning"
                             onClick={() => handleSubmitQuestionsForQuiz()}
                         >
-                            Save questions
+                            {t('quizQA.quizQA-7')}
                         </button>
                     </div>
                 }

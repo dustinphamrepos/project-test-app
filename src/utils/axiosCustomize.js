@@ -29,6 +29,10 @@ instance.interceptors.request.use(function (config) {
 }, function (error) {
     NProgress.done();
     // Do something with request error
+    // token expired
+    if (error.response.data && error.response.data.EC === -999) {
+        window.location.href = '/login'
+    }
     return Promise.reject(error);
 });
 
