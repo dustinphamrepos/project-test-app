@@ -105,21 +105,33 @@ const postAssignQuizToUser = (quizId, userId) => {
 
 }
 
-const getQuizWithQA =(quizId)=> {
+const getQuizWithQA = (quizId) => {
     return axios.get(`api/v1/quiz-with-qa/${quizId}`)
 }
 
-const postUpsertQA =(data)=> {
+const postUpsertQA = (data) => {
     return axios.post(`api/v1/quiz-upsert-qa`, { ...data })
 
 }
 
-const logOut =(email, refresh_token) => {
+const logOut = (email, refresh_token) => {
     return axios.post(`api/v1/logout`, { email, refresh_token })
 }
 
-const getOverview =() => {
+const getOverview = () => {
     return axios.get(`api/v1/overview`)
+}
+
+const postUpdateUserInfo = (username, userImage) => {
+    return axios.post(`api/v1/profile`, { username, userImage })
+}
+
+const postUpdatePassword = (username, userImage) => {
+    return axios.post(`api/v1/profile`, { username, userImage })
+}
+
+const getListHistory = () => {
+    return axios.get(`api/v1/history`)
 }
 
 export {
@@ -129,5 +141,6 @@ export {
     postSubmitAnswersQuiz, postCreateNewQuiz, getAllQuizForAdmin,
     putEditQuiz, deleteQuiz, postCreateNewQuestionForQuiz,
     postCreateNewAnswerForQuestion, postAssignQuizToUser,
-    getQuizWithQA, postUpsertQA, logOut, getOverview
+    getQuizWithQA, postUpsertQA, logOut, getOverview,
+    postUpdateUserInfo, postUpdatePassword, getListHistory
 }

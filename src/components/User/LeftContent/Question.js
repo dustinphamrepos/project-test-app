@@ -2,9 +2,10 @@ import Lightbox from "react-awesome-lightbox";
 import _ from 'lodash'
 import { useState } from "react";
 import './Question.scss'
+import { IoIosClose, IoIosCheckmark } from "react-icons/io"
 
 const Question = (props) => {
-    const { index, data, handleCheckbox } = props
+    const { index, data, handleCheckbox, isShowAnswer } = props
     const [isShowPreviewImage, setIsShowPreviewImage] = useState(false)
 
     if (_.isEmpty(data)) {
@@ -23,7 +24,7 @@ const Question = (props) => {
                 ?
                 <div className='q-image'>
                     <img
-                    style={{cursor: 'pointer'}}
+                        style={{ cursor: 'pointer' }}
                         src={`data:image/jpeg;base64,${data.image}`}
                         onClick={() => setIsShowPreviewImage(true)}
                     />
@@ -54,6 +55,7 @@ const Question = (props) => {
                                     <input
                                         className="form-check-input"
                                         type="checkbox"
+                                        disabled={props.isSubmitQuiz}
                                         checked={answer.isSelected}
                                         onChange={e => handleHandleCheckbox(e, answer.id, data.questionId)}
                                     />
@@ -62,6 +64,17 @@ const Question = (props) => {
                                     >
                                         {answer.description}
                                     </label>
+                                    {isShowAnswer === true &&
+                                        <>
+                                            {answer.isSelected === true && answer.isCorrect === false
+                                                && <IoIosClose className='incorrect' />
+                                            }
+
+                                            {answer.isCorrect === true
+                                                && <IoIosCheckmark className='correct' />
+                                            }
+                                        </>
+                                    }
                                 </div>
                             </div>
                         )

@@ -8,7 +8,7 @@ import { putUpdateUser } from '../../../../services/apiService';
 
 
 const ModalUpdateUser = (props) => {
-    const { show, setShow, dataUpdateUser } = props
+    const { show2, setShow2, dataUpdateUser } = props
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -18,7 +18,7 @@ const ModalUpdateUser = (props) => {
     const [previewImage, setPreviewImage] = useState("")
 
     const handleClose = () => {
-        setShow(false)
+        setShow2(false)
         setEmail('')
         setPassword('')
         setUserName('')
@@ -75,7 +75,7 @@ const ModalUpdateUser = (props) => {
             </Button> */}
 
             <Modal
-                show={show}
+                show={show2}
                 onHide={handleClose}
                 size="xl"
                 backdrop='static'

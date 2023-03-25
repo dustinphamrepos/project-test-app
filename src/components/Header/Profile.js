@@ -1,9 +1,9 @@
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Tab, Tabs } from 'react-bootstrap';
 import UserInfo from './UserInfo';
 import Password from './Password';
 import History from './History';
+import './Profile.scss'
 
 const Profile = (props) => {
   const { show, setShow } = props
@@ -12,11 +12,9 @@ const Profile = (props) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered>
+      <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>User's Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Tabs
@@ -25,7 +23,10 @@ const Profile = (props) => {
             className="mb-3"
           >
             <Tab eventKey="profile" title="User information">
-              <UserInfo />
+              <UserInfo
+                show={show}
+                setShow={setShow}
+              />
             </Tab>
             <Tab eventKey="password" title="Change">
               <Password />
@@ -35,14 +36,6 @@ const Profile = (props) => {
             </Tab>
           </Tabs>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

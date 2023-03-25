@@ -110,8 +110,8 @@ const ManageUser = (props) => {
                     setCurrentPage={setCurrentPage}
                 />
                 <ModalUpdateUser
-                    show={showModalUpdateUser}
-                    setShow={setShowModalUpdateUser}
+                    show2={showModalUpdateUser}
+                    setShow2={setShowModalUpdateUser}
                     fetchListUsers={fetchListUsers}
                     dataUpdateUser={dataUpdateUser}
                     resetUpdateData={resetUpdateData}

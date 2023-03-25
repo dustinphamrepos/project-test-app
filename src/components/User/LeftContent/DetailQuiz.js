@@ -16,6 +16,8 @@ const DetailQuiz = () => {
     const [indexOfCurrentQuestion, setIndexOfCurrentQuestion] = useState(0)
     const [isShowModalResult, setIsShowModalResult] = useState(false)
     const [dataModalResult, setDataModalResult] = useState({})
+    const [isShowAnswer, setIsShowAnswer] = useState(false)
+    const [isSubmitQuiz, setIsSubmitQuiz] = useState(false)
     // console.log(location)
 
     // console.log('>>>>>>', params)
@@ -43,6 +45,7 @@ const DetailQuiz = () => {
                             image = item.image
                         }
                         item.answers.isSelected = false
+                        item.answers.isCorrect = false
                         answers.push(item.answers)
                     })
                     // console.log('value: ', value)
@@ -132,16 +135,44 @@ const DetailQuiz = () => {
             let res = await postSubmitAnswersQuiz(payload)
             console.log('res>>>', res);
             if (res && res.EC === 0) {
+                setIsSubmitQuiz(true)
                 setDataModalResult({
                     countCorrect: res.DT.countCorrect,
                     countTotal: res.DT.countTotal,
                     quizData: res.DT.quizData
                 })
                 setIsShowModalResult(true)
+                // update
+                if (res.DT && res.DT.quizData) {
+                    let dataQuizClone = _.cloneDeep(dataQuiz);
+                    let a = res.DT.quizData;
+                    for (let q of a) {
+                        for (let i = 0; i < dataQuizClone.length; i++) {
+                            if (+q.questionId === +dataQuizClone[i].questionId) {
+                                //update answer
+                                let newAnswers = [];
+                                for (let j = 0; j < dataQuizClone[i].answers.length; j++) {
+                                    let s = q.systemAnswers.find(item => +item.id === +dataQuizClone[i].answers[j].id)
+                                    if (s) {
+                                        dataQuizClone[i].answers[j].isCorrect = true;
+                                    }
+                                    newAnswers.push(dataQuizClone[i].answers[j]);
+                                }
+                                dataQuizClone[i].answers = newAnswers;
+                            }
+                        }
+                    }
+                    setDataQuiz(dataQuizClone);
+                }
             } else {
                 alert('something wrong...')
             }
         }
+    }
+
+    const handleShowAnswer = () => {
+        if (!isSubmitQuiz) return;
+        setIsShowAnswer(true)
     }
 
     return (
@@ -165,6 +196,8 @@ const DetailQuiz = () => {
                     <hr />
                     <div className="q-content">
                         <Question
+                            isShowAnswer={isShowAnswer}
+                            isSubmitQuiz={isSubmitQuiz}
                             index={indexOfCurrentQuestion}
                             handleCheckbox={handleCheckbox}
                             data={
@@ -189,6 +222,7 @@ const DetailQuiz = () => {
                             Next
                         </button>
                         <button
+                            disabled={isSubmitQuiz}
                             className="btn btn-warning"
                             onClick={() => handleFinishQuiz()}
                         >
@@ -206,6 +240,7 @@ const DetailQuiz = () => {
                 <ModalResult
                     show={isShowModalResult}
                     setShow={setIsShowModalResult}
+                    handleShowAnswer={handleShowAnswer}
                     dataModalResult={dataModalResult}
                 />
             </div>

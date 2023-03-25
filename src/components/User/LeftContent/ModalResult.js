@@ -30,7 +30,10 @@ const ModalResult = (props) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={()=> {
+                        handleClose();
+                        props.handleShowAnswer();
+                    }}>
                         Show answers
                     </Button>
                     <Button variant="primary" onClick={() => handleClose()}>
